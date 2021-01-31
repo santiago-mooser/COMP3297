@@ -30,9 +30,8 @@ services:
     networks:
       - web_net
     volumes:
-      - ./volumes/app/config:/hopu/hopu/config:rw
-      - ./volumes/app/data:/hopu/hopu/results:rw
-      - ./volumes/app/log:/hopu/hopu/log:rw
+      - ./volumes/app/config:/mysite/config:rw
+      - ./volumes/app/log:/mysite/log:rw
     environment:
       #set these in the .env file
       - pg_user=${pg_user}

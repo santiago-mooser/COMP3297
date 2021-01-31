@@ -9,17 +9,15 @@ RUN apt-get install -y python3 \
     curl \
     make
 
-RUN python3 -m pip install -r requirements.txt
-
-WORKDIR /mysite
-
-RUN mkdir -p /mysite/
+WORKDIR /app
 
 HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
 
-COPY ["entrypoint.sh", "/app"]
+COPY ["entrypoint.sh", "/"]
 
-COPY ["/mysite/*", "/mysite"]
+COPY ["/mysite/*", "/app/"]
+
+RUN python3 -m pip install -r requirements.txt
 
 EXPOSE 8080
 

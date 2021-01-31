@@ -8,7 +8,7 @@ That's it!
 
 ## How do I get set up? ##
 ---
-* Copy `doc/sample_files/example.env` to this folder and edit it to set the configurations for this specific install and rename to `.env`.
+* Copy `doc/sample_files/example.env` to the root of the repository and edit it to set the configurations for this specific install and rename to `.env`.
 * (optional) Edit the docker-compose file to fit your needs (such as which folders are linked to the local filesystem and where the docker containers are stored)
 * Run this in the main folder:
 ```

@@ -15,7 +15,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
 
 COPY ["entrypoint.sh", "/"]
 
-COPY ["/mysite/*", "/app/"]
+COPY ["/mysite/", "/app/"]
 
 RUN python3 -m pip install -r requirements.txt
 

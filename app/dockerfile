@@ -1,0 +1,28 @@
+FROM ubuntu
+ENV PATH="/:${PATH}"
+
+# Install vnc, xvfb in order to create a 'fake' display and firefox
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y python3 \
+    python3-pip \
+    python-is-python3 \
+    curl \
+    make
+
+RUN python3 -m pip install -r requirements.txt
+
+WORKDIR /mysite
+
+RUN mkdir -p /mysite/
+
+HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
+
+COPY ["entrypoint.sh", "/app"]
+
+COPY ["/mysite/*", "/mysite"]
+
+EXPOSE 8080
+
+VOLUME ["/mysite/config", "/mysite/log"]
+
+ENTRYPOINT [ "bash", "/entrypoint.sh" ]

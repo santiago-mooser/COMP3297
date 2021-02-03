@@ -9,9 +9,9 @@ RUN apt-get install -y python3 \
     curl \
     make
 
-WORKDIR /app
+WORKDIR /django_project
 
-COPY ["/mysite/", "/app/"]
+COPY ["/django_project/", "/django_project/"]
 
 RUN python3 -m pip install -r requirements.txt
 
@@ -21,6 +21,6 @@ EXPOSE 8080
 
 HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
 
-VOLUME ["/mysite/config", "/mysite/log"]
+VOLUME ["/django_project/config", "/django_project/log"]
 
 ENTRYPOINT [ "bash", "/entrypoint.sh" ]

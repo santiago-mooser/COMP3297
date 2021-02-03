@@ -38,9 +38,9 @@ services:
       - pg_pass=${pguser_password}
       - pg_db=${pgdb_name}
       - django_port=${django_port}
-      - django_admin=${django_admin}
-      - django_email=${django_email}
-      - django_password=${django_password}
+      - DJANGO_SUPERUSER_USERNAME=${django_admin}
+      - DJANGO_SUPERUSER_EMAIL=${django_email}
+      - DJANGO_SUPERUSER_PASSWORD=${django_password}
 
   web:
     build: web

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-echo "Sleeping to allow database to initialize"
-sleep 3.5
-python3 manage.py createsuperuser --no-input
-python3 manage.py migrate
-python3 manage.py runserver 0:${django_port}

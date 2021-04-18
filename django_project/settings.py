@@ -26,12 +26,15 @@ SECRET_KEY = 'v$2^s=x%xo02&uz=@_)t9(tt6(r0uc5syg$-&+ank8u6d554k1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app", "localhost"]
+ALLOWED_HOSTS = ["app", "localhost", '.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap4',
+    'crispy_forms',
+    'sse_finder.apps.SseFinderConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,4 +1,11 @@
-Django
-psycopg2-binary
-django-guardian 
-django-ratelimit
+asgiref==3.3.4
+beautifulsoup4==4.9.3
+Django==3.2
+django-bootstrap4==3.0.0
+django-crispy-forms==1.11.2
+django-guardian==2.3.0
+django-ratelimit==3.0.1
+psycopg2-binary==2.8.6
+pytz==2021.1
+soupsieve==2.2.1
+sqlparse==0.4.1

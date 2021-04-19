@@ -4,5 +4,15 @@ from . import views
 
 urlpatterns = [
 
-    
+      #Redirect default views to HK
+    path('', views.homepage, name='homepage'),
+    path('home/', views.proxy, name='homepage'),
+
+    #Path to add a new resource
+    path('add/location', views.add_location, name='add_location'),
+    path('add/case', views.add_case, name='add_case'),
+
+    path('location/<str:loc_name>', views.location_details, name='location_details'),
+    path('case/<str:case_id>', views.case_details, name='case_details'),
+
 ]

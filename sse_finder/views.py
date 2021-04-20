@@ -1,11 +1,13 @@
 from django.shortcuts import render
 
+from .forms import Homepage
+
 # Create your views here.
 
 
 def homepage(request):
-    return 
-
+    form = Homepage()
+    return render(request, 'base.html', {'form': form})
 
 def add_location(request):
     return

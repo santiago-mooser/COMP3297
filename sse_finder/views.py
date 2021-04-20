@@ -18,3 +18,6 @@ def location_details(request, loc_name):
 
 def case_details(request, loc_name):
     return
+
+def proxy(request):
+    return

@@ -1,7 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
-from django.forms.fields import DateField
 
 from .models import *
 
@@ -12,11 +11,11 @@ class Homepage(forms.Form):
 
 class New_location(forms.Form):
 
-    name                    = forms.CharField(max_length=250, label="Name")
-    location                = forms.CharField(max_length=250, label="Location")
-    address                 = forms.CharField(max_length=250, label="Address")
-    date_of_event           = forms.DateField(label="Date of Event")
-    description_of_event    = forms.CharField(max_length=1000, label="Description of event")
+    name                    = forms.CharField(max_length=250, label='Name')
+    location                = forms.CharField(max_length=250, label='Location')
+    address                 = forms.CharField(max_length=250, label='Address')
+    date_of_event           = forms.DateField(label='Date of Event')
+    description_of_event    = forms.CharField(max_length=1000, label='Description of event')
     
 
     class Meta:
@@ -33,12 +32,12 @@ class New_location(forms.Form):
 class New_case(forms.Form):
 
 
-    name            = models.CharField(max_length=150, label="Name")
-    case_number     = models.CharField(max_length=25, unique=True, label="Case Number")
-    id              = models.CharField(max_length=25, unique=True, label="ID")
-    date_of_birth   = models.DateField(label="Date of Birth")
-    date_of_onset   = models.DateField(label="Date of Symptoms Onset")
-    date_of_test    = models.DateField(label="Date of Positive Test")
+    name            = models.CharField(max_length=150, label='Name')
+    case_number     = models.CharField(max_length=25, unique=True, label='Case Number')
+    personal_id     = models.CharField(max_length=25, unique=True, label='ID')
+    date_of_birth   = models.DateField(label='Date of Birth')
+    date_of_onset   = models.DateField(label='Date of Symptoms Onset')
+    date_of_test    = models.DateField(label='Date of Positive Test')
 
 
 

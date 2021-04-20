@@ -17,7 +17,7 @@ class Case(models.Model):
 
     name            = models.CharField(max_length=150)
     case_number     = models.CharField(max_length=25, unique=True)
-    id              = models.CharField(max_length=25, unique=True)
+    personal_id     = models.CharField(max_length=25, unique=True)
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()

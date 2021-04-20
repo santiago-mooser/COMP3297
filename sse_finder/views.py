@@ -1,13 +1,21 @@
 from django.shortcuts import render
 
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.template import loader
 from .forms import Homepage
 
 # Create your views here.
 
 
 def homepage(request):
+    # First, like always, load the HTML template with no context
+    template = loader.get_template('base.html')
+    context = {}
     form = Homepage()
-    return render(request, 'base.html', {'form': form})
+
+    context.update({ "form": form })
+
+    return HttpResponse(template.render(context, request))
 
 def add_location(request):
     return

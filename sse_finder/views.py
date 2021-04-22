@@ -22,7 +22,48 @@ def homepage(request):
     return HttpResponse(template.render(context, request))
 
 def add_location(request):
-    return
+    template = loader.get_template('pages/new_location.html')
+
+    if request.method == 'POST':
+        form = New_location(request.POST)
+
+        # check if the form is valid
+        if form.is_valid():
+
+            # Extract data from form
+            name = form.cleaned_data['location_name']
+            loc = form.cleaned_data['location']
+            addr = form.cleaned_data['address']
+            date = form.cleaned_data['date_of_event']
+            description = form.cleaned_data['description_of_event']
+
+            # Create new instance of model Case
+            new_loc = Location(
+                name=name,
+                location=loc,
+                Address=addr,
+                date_of_event=date,
+                Description_of_event=description,
+            )
+            try:
+                new_loc.save()
+            except Exception as e:
+                print(e)
+                messages.error(request, "Internal server error! Please reload page.")
+                return HttpResponseRedirect('/add/location')
+            
+            messages.success(request, "Details successfully saved.")
+            # TODO: redirect to location details
+            return HttpResponseRedirect('/')
+
+        # If form is invalid
+        else:
+            messages.error(request, "Please enter valid details.")
+            return HttpResponseRedirect('/add/location')
+    # If method is not POST (is GET)
+    else:
+        form = New_location() # empty form instance
+    return HttpResponse(template.render({'form': form}, request))
 
 def add_case(request):
     template = loader.get_template('pages/new_case.html')
@@ -50,7 +91,6 @@ def add_case(request):
                 date_of_birth=dob,
                 date_of_onset=doo,
                 date_of_test=dot,
-                # TODO: add class variable Event in forms.py
                 Event=event,
             )
             try:
@@ -58,8 +98,7 @@ def add_case(request):
             except Exception as e:
                 print(e)
                 messages.error(request, "Internal server error! Please reload page.")
-                # TODO: redirect to homepage
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/add/case')
             
             messages.success(request, "Details successfully saved.")
             # TODO: redirect to case details

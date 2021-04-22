@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+{% endblock %}
 
 {% block title %}
     Home
@@ -7,6 +13,55 @@
 
 {% block content %}
     
-    {% bootstrap_form form %}
+    <div class="heading">
+        <div class="heading-inner">
+            <h3>Potential SSEs</h3>
+        </div>
+    </div>
+
+    <div class="date-container">
+        <div class="date-form">
+            <div class="dates">
+                From: {{ form.as_p }}
+                To: {{ form.as_p }}
+            </div>
+            <div class="buttons">
+                <button class="btn btn-success button submit">Submit</button>
+                <button class="btn btn-danger button">Add New Case</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="table-container">
+        <div class="table-inner">
+            <table class="table">
+
+                <thead class="table-dark bg-primary">
+        
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location Address</th>
+                    <th scope="col">Cases</th>
+                </tr>
+        
+                </thead>
+        
+                <tbody>
+        
+                    {% for location in locations %}
+                        <tr>
+                            <th scope="row">{{location}}</th>
+                            <td>{{location.Address}}</td>
+                            <td>{{location.cases}}</td>
+                        </tr>
+                    {% endfor %}
+        
+                </tbody>
+        
+            </table>
+        </div>
+    </div>
+    
 
 {% endblock %}

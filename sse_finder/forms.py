@@ -6,7 +6,7 @@ from .models import *
 
 
 class Homepage(forms.Form):
-    date_range = forms.DateField()
+    date_range = forms.DateField(label = '')
 
 
 class New_location(forms.Form):

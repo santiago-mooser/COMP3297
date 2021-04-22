@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .forms import Homepage
+from .models import Location
 
 # Create your views here.
 
@@ -15,6 +16,12 @@ def homepage(request):
 
     context.update({ "form": form })
 
+    locations = Location.objects.all()
+    for location in locations:
+        location.cases = 10
+
+    context.update({'locations': locations})
+    # print(context['locations'])
     return HttpResponse(template.render(context, request))
 
 def add_location(request):

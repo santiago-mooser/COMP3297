@@ -1,8 +1,11 @@
+from django.contrib.messages.api import error
 from django.shortcuts import render
 
+from django.shortcuts import redirect
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from .forms import Homepage, New_case, New_location
+from django.contrib import messages
 from .models import *
 
 # Create your views here.
@@ -22,7 +25,6 @@ def add_location(request):
     return
 
 def add_case(request):
-
     template = loader.get_template('pages/new_case.html')
 
     if request.method == 'POST':
@@ -38,28 +40,30 @@ def add_case(request):
             dob      = form.cleaned_data['date_of_birth']
             doo      = form.cleaned_data['date_of_onset']
             dot      = form.cleaned_data['date_of_test']
+            event    = form.cleaned_data['case_event']
 
             # Create new instance of model Case
             new_case = Case(
-                case_name=name,
+                name=name,
                 case_number=num_case,
                 personal_id=pid,
                 date_of_birth=dob,
                 date_of_onset=doo,
                 date_of_test=dot,
                 # TODO: add class variable Event in forms.py
-                Event=Location(),
+                Event=event,
             )
             try:
                 new_case.save()
-            except:
+            except Exception as e:
+                print(e)
                 messages.error(request, "Internal server error! Please reload page.")
                 # TODO: redirect to homepage
-                return HttpResponseRedirect('/add/case')
+                return HttpResponseRedirect('/')
             
             messages.success(request, "Details successfully saved.")
             # TODO: redirect to case details
-            return HttpResponseRedirect('/add/case')
+            return HttpResponseRedirect('/')
 
         # If form is invalid
         else:
@@ -68,9 +72,7 @@ def add_case(request):
     # If method is not POST
     else:
         form = New_case() # empty form instance
-
-    context = {'form':form}
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render({'form': form}, request))
 
 def location_details(request, loc_name):
     return

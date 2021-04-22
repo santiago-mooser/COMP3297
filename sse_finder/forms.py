@@ -12,11 +12,16 @@ class Homepage(forms.Form):
 
 class New_location(forms.Form):
 
-    location_name           = forms.CharField(max_length=250, label='Location name')
-    location                = forms.CharField(max_length=250, label='Location')
-    address                 = forms.CharField(max_length=250, label='Address')
-    date_of_event           = forms.DateField(label='Date of Event')
-    description_of_event    = forms.CharField(max_length=1000, label='Description of event')
+    location_name           = forms.CharField(max_length=250, label='Location name'
+                                                , widget= forms.TextInput(attrs={'placeholder':'e.g. a restaurant name'}))
+    location                = forms.CharField(max_length=250, label='Location'
+                                                , widget= forms.TextInput(attrs={'placeholder':'e.g. a building name'}))
+    address                 = forms.CharField(max_length=250, label='Address'
+                                                , widget= forms.TextInput(attrs={'placeholder':'Don\'t worry, backend will handle this'}))
+    date_of_event           = forms.DateField(label='Date of Event'
+                                                , widget= forms.TextInput(attrs={'placeholder':'YYYY-mm-dd'}))
+    description_of_event    = forms.CharField(max_length=1000, label='Description of event'
+                                                , widget= forms.TextInput(attrs={'placeholder':'Briefly describe event'}))
     
 
     class Meta:

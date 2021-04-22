@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="{% static 'sse_finder/style.css' %}">
     {# Load the tag library #}
     {% load bootstrap4 %}
 
@@ -17,7 +18,6 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -28,8 +28,8 @@
         
         <div class="container-fluid">
             
-            <a class="navbar-brand" href="#">SSE Finder</a>
-        
+            <img class="navbar-brand logo" src="{% static 'sse_finder/logo.png' %}" alt="logo">
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -46,14 +46,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">New Location</a>
                     </li>
-                    <li class="d-flex nav-item">
-                        <a class="nav-link" href="#">Admin</a>
-                    </li>
+
                 </ul>
             
             </div>
 
-            <a class="d-flex nav-link">Admin</a>
+            <a href="/admin" class="d-flex nav-link text-dark">Admin</a>
 
         </div>
 
@@ -62,6 +60,18 @@
     {% block content %}
 
     {% endblock %}
+
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2021 Copyright:
+        <a href="https://mdbootstrap.com/"> Betalabs</a>
+        </div>
+        <!-- Copyright -->
+    
+    </footer>
+    <!-- Footer -->
     
 </body>
 </html>

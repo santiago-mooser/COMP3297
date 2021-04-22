@@ -9,7 +9,7 @@ from .forms import Homepage
 
 def homepage(request):
     # First, like always, load the HTML template with no context
-    template = loader.get_template('base.html')
+    template = loader.get_template('pages/home.html')
     context = {}
     form = Homepage()
 

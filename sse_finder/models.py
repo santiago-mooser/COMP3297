@@ -11,7 +11,7 @@ class Location(models.Model):
     Description_of_event    = models.CharField(max_length=1000)
     
     def __str__(self):
-        return self.location_name
+        return self.name
 
 class Case(models.Model):
 

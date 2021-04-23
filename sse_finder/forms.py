@@ -4,14 +4,17 @@ from django import forms
 
 from .models import *
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class Homepage(forms.Form):
-    date_range = forms.DateField()
+    date_from_range = forms.DateTimeField(label = '', widget=DateInput)
+    date_to_range = forms.DateTimeField(label = '', widget=DateInput)
 
 
 class New_location(forms.Form):
 
-    name                    = forms.CharField(max_length=250, label='Name')
+    location_name           = forms.CharField(max_length=250, label='Location name')
     location                = forms.CharField(max_length=250, label='Location')
     address                 = forms.CharField(max_length=250, label='Address')
     date_of_event           = forms.DateField(label='Date of Event')
@@ -19,8 +22,8 @@ class New_location(forms.Form):
     
 
     class Meta:
-        model = Location
-        fields = ('name', 'location', 'address', 'date_of_event', 'description_of_event')
+        model   = Location
+        fields  = ('location_name', 'location', 'address', 'date_of_event', 'description_of_event')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,19 +34,16 @@ class New_location(forms.Form):
 
 class New_case(forms.Form):
 
-
-    name            = models.CharField(max_length=150, label='Name')
-    case_number     = models.CharField(max_length=25, unique=True, label='Case Number')
-    personal_id     = models.CharField(max_length=25, unique=True, label='ID')
-    date_of_birth   = models.DateField(label='Date of Birth')
-    date_of_onset   = models.DateField(label='Date of Symptoms Onset')
-    date_of_test    = models.DateField(label='Date of Positive Test')
-
-
+    case_name       = forms.CharField(max_length=150, label='Name')
+    case_number     = forms.CharField(max_length=25, label='Case Number')
+    personal_id     = forms.CharField(max_length=25, label='ID')
+    date_of_birth   = forms.DateField(label='Date of Birth')
+    date_of_onset   = forms.DateField(label='Date of Symptoms Onset')
+    date_of_test    = forms.DateField(label='Date of Positive Test')
 
     class Meta:
-        model = Location
-        fields = ('name', 'case_number', 'id', 'date_of_birth', 'date_of_onset', 'date_of_test')
+        model   = Case
+        fields  = ('case_name', 'case_number', 'personal_id', 'date_of_birth', 'date_of_onset', 'date_of_test')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

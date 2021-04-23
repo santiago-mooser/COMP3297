@@ -1,0 +1,36 @@
+.wrapper
+{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background-color: rgb(248, 247, 233);
+}
+
+.container
+{
+    min-height: 100vh;
+    padding: 0 !important;
+    background-color: white;
+}
+
+.logo
+{
+    height: 4.5rem;
+}
+
+.nav-item
+{
+    padding: 0 2rem;
+}
+
+.footer
+{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 0;
+}

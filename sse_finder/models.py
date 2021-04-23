@@ -6,9 +6,9 @@ class Location(models.Model):
     
     name                    = models.CharField(max_length=250)
     location                = models.CharField(max_length=250)
-    Address                 = models.CharField(max_length=250)
+    address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()
-    Description_of_event    = models.CharField(max_length=1000)
+    description_of_event    = models.CharField(max_length=1000)
     
     def __str__(self):
         return self.location_name
@@ -21,7 +21,7 @@ class Case(models.Model):
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()
-    Event           = models.ForeignKey(Location, on_delete=models.CASCADE)
+    event           = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

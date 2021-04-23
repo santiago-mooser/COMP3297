@@ -30,7 +30,7 @@
                 
                 <div class="container-fluid">
                     
-                    <img class="navbar-brand logo" src="{% static 'sse_finder/logo.png' %}" alt="logo">
+                    <a href="/"><img class="navbar-brand logo" src="{% static 'sse_finder/logo.png' %}" alt="logo"></a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -40,20 +40,20 @@
 
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">New Case</a>
+                                <a class="nav-link" href="{% url 'add_case' %}">New Case</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">New Location</a>
+                                <a class="nav-link" href="{% url 'add_location' %}">New Location</a>
                             </li>
 
                         </ul>
                     
                     </div>
 
-                    <a href="/admin" class="d-flex nav-link text-dark">Admin</a>
+                    <a href="admin/" class="d-flex nav-link text-dark">Admin</a>
 
                 </div>
 

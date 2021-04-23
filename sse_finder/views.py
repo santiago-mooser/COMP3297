@@ -1,12 +1,8 @@
 from django.http.response import HttpResponse
 from django.template import loader
 from django.contrib import messages
-from django.shortcuts import render
 from .models import *
-from django.contrib import messages
-from django.template import loader
-from django.http.response import HttpResponse, HttpResponseRedirect
-from .forms import Homepage
+from .forms import *
 # Create your views here.
 
 
@@ -54,9 +50,20 @@ def location_details(request, loc_name):
 
     return HttpResponse(template.render(context, request))
 
-def case_details(request, loc_name):
-    return
+    try:
+        location = Location.objects.get(location_name=loc_name)
+    except:
+        messages.error(request, "Location not found!")
+        return HttpResponse(template.render(context, request))
 
+    context.update(location.get_details())
+
+    return HttpResponse(template.render(context, request))
+
+
+def case_details(request, case_num):
+    template = loader.get_template('pages/case_details.html')
+    context = {}
     try:
         case = Case.objects.get(case_number=case_num)
     except:

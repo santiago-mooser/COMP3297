@@ -1,7 +1,11 @@
 from django.http.response import HttpRespons, HttpResponse
 from django.template import loader
+from django.contrib import messages
+from django.shortcuts import render
 from .models import *
 from django.contrib import messages
+from django.template import loader
+from django.http.response import HttpResponse, HttpResponseRedirect
 from .forms import Homepage
 # Create your views here.
 
@@ -40,18 +44,20 @@ def location_details(request, loc_name):
     template = loader.get_template('pages/location_details.html')
     context = {}
 
+def case_details(request, loc_name):
+    return
+
     try:
-        location = Location.objects.get(name=loc_name)
+        case = Case.objects.get(case_number=case_num)
     except:
-        messages.error(request, "Location not found!")
+        messages.error(request, "Case not found!")
         return HttpResponse(template.render(context, request))
 
-    context.update(location.get_details())
+    context.update(case.get_details())
 
     return HttpResponse(template.render(context, request))
 
-def case_details(request, loc_name):
-    return
+
 
 def proxy(request):
     return

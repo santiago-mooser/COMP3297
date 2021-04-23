@@ -10,6 +10,14 @@ from .models import Location
 
 def homepage(request):
     # First, like always, load the HTML template with no context
+    
+    if request.method == 'POST':
+
+        form = Homepage(request.POST)
+        
+        if form.is_valid():
+            print(form.cleaned_data)
+
     template = loader.get_template('pages/home.html')
     context = {}
     form = Homepage()
@@ -21,7 +29,7 @@ def homepage(request):
         location.cases = 10
 
     context.update({'locations': locations})
-    # print(context['locations'])
+    
     return HttpResponse(template.render(context, request))
 
 def add_location(request):

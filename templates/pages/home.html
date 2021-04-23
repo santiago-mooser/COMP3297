@@ -20,18 +20,27 @@
     </div>
 
     <div class="date-container">
-        <div class="date-form">
-            <div class="dates">
-                From: {{ form.as_p }}
-                To: {{ form.as_p }}
+
+        <form method="POST" action="/">
+            {% csrf_token %}
+
+            <div class="date-form">
+
+                <div class="dates">
+                    Please Enter a Date Range <br><br> {{ form.as_p }}
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn btn-success button submit">Submit</button>
+                    <button class="btn btn-danger button">Add New Case</button>
+                </div>
+
             </div>
-            <div class="buttons">
-                <button class="btn btn-success button submit">Submit</button>
-                <button class="btn btn-danger button">Add New Case</button>
-            </div>
-        </div>
-        
+
+        </form>
+
     </div>
+
 
     <div class="table-container">
         <div class="table-inner">
@@ -62,6 +71,13 @@
             </table>
         </div>
     </div>
-    
+
+    <script>
+        $(function () {
+          $("#id_date").datepicker({
+            format:'dd/mm/yyyy',
+          });
+        });
+      </script>
 
 {% endblock %}

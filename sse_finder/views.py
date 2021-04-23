@@ -1,3 +1,6 @@
+from django.http.response import HttpRespons, HttpResponse
+from django.template import loader
+from django.contrib import messages
 from django.shortcuts import render
 from .models import *
 from django.contrib import messages
@@ -38,11 +41,11 @@ def add_case(request):
     return
 
 def location_details(request, loc_name):
-    return
-
-def case_details(request, case_num):
-    template = loader.get_template('pages/case_details.html')
+    template = loader.get_template('pages/location_details.html')
     context = {}
+
+def case_details(request, loc_name):
+    return
 
     try:
         case = Case.objects.get(case_number=case_num)

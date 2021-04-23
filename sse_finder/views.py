@@ -25,14 +25,7 @@ def location_details(request, loc_name):
         messages.error(request, "Location not found!")
         return HttpResponse(template.render(context, request))
 
-
-    context.update({
-        "name": location.name,
-        "location": location.location,
-        "address": location.address,
-        "date_of_event": location.date_of_event,
-        "description_of_event": location.description_of_event,
-    })
+    context.update(location.get_details())
 
     return HttpResponse(template.render(context, request))
 

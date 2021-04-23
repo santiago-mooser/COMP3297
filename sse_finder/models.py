@@ -6,12 +6,23 @@ class Location(models.Model):
     
     name                    = models.CharField(max_length=250)
     location                = models.CharField(max_length=250)
-    Address                 = models.CharField(max_length=250)
+    address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()
-    Description_of_event    = models.CharField(max_length=1000)
+    description_of_event    = models.CharField(max_length=1000)
     
     def __str__(self):
         return self.location_name
+
+    def get_details(self):
+        details = {
+            "name": self.name,
+            "location": self.location,
+            "address": self.address,
+            "date_of_event": self.date_of_event,
+            "description_of_event": self.description_of_event,
+        }
+
+        return details
 
 class Case(models.Model):
 

@@ -23,5 +23,19 @@ class Case(models.Model):
     date_of_test    = models.DateField()
     event           = models.ForeignKey(Location, on_delete=models.CASCADE)
 
+
+    def get_details(self):
+        details = {
+            "name": self.name,
+            "case_number": self.case_number,
+            "personal_id": self.personal_id,
+            "date_of_birth": self.date_of_birth,    
+            "date_of_onset": self.date_of_onset,
+            "date_of_test":self.date_of_test,
+            "event":self.event,
+        }
+
+        return details
+
     def __str__(self):
         return self.name

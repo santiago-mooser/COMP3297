@@ -5,9 +5,12 @@ from django import forms
 
 from .models import *
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class Homepage(forms.Form):
-    date_range = forms.DateField()
+    date_from_range = forms.DateTimeField(label = '', widget=DateInput)
+    date_to_range = forms.DateTimeField(label = '', widget=DateInput)
 
 
 class New_location(forms.Form):

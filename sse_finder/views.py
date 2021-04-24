@@ -1,24 +1,38 @@
+
 from django.contrib.messages.api import error
 from django.shortcuts import render
-
 from django.shortcuts import redirect
-from django.http.response import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from .forms import Homepage, New_case, New_location
-from django.contrib import messages
 from .models import *
+from django.contrib import messages
+from django.template import loader
+from django.http.response import HttpResponse, HttpResponseRedirect
+from .forms import Homepage, New_case, New_location
 
 # Create your views here.
 
 
 def homepage(request):
     # First, like always, load the HTML template with no context
+    
+    if request.method == 'POST':
+
+        form = Homepage(request.POST)
+        
+        if form.is_valid():
+            print(form.cleaned_data)
+
     template = loader.get_template('pages/home.html')
     context = {}
     form = Homepage()
 
     context.update({ "form": form })
 
+    locations = Location.objects.all()
+    for location in locations:
+        location.cases = 10
+
+    context.update({'locations': locations})
+    
     return HttpResponse(template.render(context, request))
 
 def add_location(request):
@@ -114,10 +128,33 @@ def add_case(request):
     return HttpResponse(template.render({'form': form}, request))
 
 def location_details(request, loc_name):
-    return
+
+    template = loader.get_template('pages/location_details.html')
+    context = {}
+    
+    # we assume that there's only 1 location with the same name. Specified in Project req doc I think
+
+    location    = Location.objects.filter(name = loc_name)[0] 
+    cases       = Case.objects.filter(event__name__contains = loc_name)
+    
+    context.update({'location': location, 'cases': cases})
+
+    return HttpResponse(template.render(context, request))
 
 def case_details(request, loc_name):
     return
+
+    try:
+        case = Case.objects.get(case_number=case_num)
+    except:
+        messages.error(request, "Case not found!")
+        return HttpResponse(template.render(context, request))
+
+    context.update(case.get_details())
+
+    return HttpResponse(template.render(context, request))
+
+
 
 def proxy(request):
     return

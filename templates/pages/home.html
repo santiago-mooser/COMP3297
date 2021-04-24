@@ -1,12 +1,83 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+{% endblock %}
 
 {% block title %}
     Home
 {% endblock %}
 
 {% block content %}
+    
+    <div class="heading">
+        <div class="heading-inner">
+            <h3>Potential SSEs</h3>
+        </div>
+    </div>
 
-    {% bootstrap_form form %}
+    <div class="date-container">
+
+        <form method="POST" action="/">
+            {% csrf_token %}
+
+            <div class="date-form">
+
+                <div class="dates">
+                    Please Enter a Date Range <br><br> {{ form.as_p }}
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn btn-success button submit">Submit</button>
+                    <button class="btn btn-danger button">Add New Case</button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="table-container">
+        <div class="table-inner">
+            <table class="table">
+
+                <thead class="table-dark bg-primary">
+        
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location Address</th>
+                    <th scope="col">Cases</th>
+                </tr>
+        
+                </thead>
+        
+                <tbody>
+        
+                    {% for location in locations %}
+                        <tr>
+                            <th scope="row"><a href= "{% url 'location_details' location.name %}">{{location}}</a></th>
+                            <td>{{location.address}}</td>
+                            <td>{{location.cases}}</td>
+                        </tr>
+                    {% endfor %}
+        
+                </tbody>
+        
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+          $("#id_date").datepicker({
+            format:'dd/mm/yyyy',
+          });
+        });
+      </script>
 
 {% endblock %}

@@ -44,6 +44,13 @@ def location_details(request, loc_name):
 
     template = loader.get_template('pages/location_details.html')
     context = {}
+    
+    # we assume that there's only 1 location with the same name. Specified in Project req doc I think
+
+    location    = Location.objects.filter(name = loc_name)[0] 
+    cases       = Case.objects.filter(event__name__contains = loc_name)
+    
+    context.update({'location': location, 'cases': cases})
 
     return HttpResponse(template.render(context, request))
 

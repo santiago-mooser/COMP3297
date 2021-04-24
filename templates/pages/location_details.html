@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/location_details.css' %}">
+{% endblock %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    
+    <div class="heading">
+        <div class="heading-inner">
+            <h3>{{location.name}}</h3>
+        </div>
+    </div>
+
+    <div class="location_detail_container">
+        <ul class="location_details">
+            <li><span style="font-weight: bold;">Location: </span> {{location.location}}</li>
+            <li><span style="font-weight: bold;">Address: </span>{{location.address}}</li>
+            <li><span style="font-weight: bold;">Date of Event: </span>{{location.date_of_event}}</li>
+            <li><span style="font-weight: bold;">Description of Event: </span>{{location.description_of_event}}</li>
+        </ul>
+    </div>    
+    
+    <div class="table-container">
+        <div class="table-inner">
+            <table class="table">
+
+                <thead class="table-dark bg-primary">
+        
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Personal ID</th>
+                    <th scope="col">Case Number</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Date of Onset</th>
+                    <th scope="col">Date of Test</th>
+                </tr>
+        
+                </thead>
+        
+                <tbody>
+        
+                    {% for case in cases %}
+                        <tr>
+                            <th scope="row"><a href= "{% url 'case_details' case.id %}">{{case.name}}</a></th>
+                            <td>{{case.personal_id}}</td>
+                            <td>{{case.case_number}}</td>
+                            <td>{{case.date_of_birth}}</td>
+                            <td>{{case.date_of_onset}}</td>
+                            <td>{{case.date_of_test}}</td>
+                        </tr>
+                    {% endfor %}
+        
+                </tbody>
+        
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

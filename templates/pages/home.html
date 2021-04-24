@@ -60,8 +60,8 @@
         
                     {% for location in locations %}
                         <tr>
-                            <th scope="row">{{location}}</th>
-                            <td>{{location.Address}}</td>
+                            <th scope="row"><a href= "{% url 'location_details' location.name %}">{{location}}</a></th>
+                            <td>{{location.address}}</td>
                             <td>{{location.cases}}</td>
                         </tr>
                     {% endfor %}

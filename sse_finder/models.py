@@ -21,7 +21,7 @@ class Case(models.Model):
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()
-    Event           = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    Event           = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

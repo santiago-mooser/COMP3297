@@ -1,34 +1,46 @@
 from django.http.response import HttpResponse
 from django.template import loader
 from django.contrib import messages
+from django.shortcuts import render
 from .models import *
-from .forms import *
-# Create your views here.
+from django.contrib import messages
+from django.template import loader
+from django.http.response import HttpResponse, HttpResponseRedirect
+from .forms import Homepage
+
 
 
 def homepage(request):
-    # First, like always, load the HTML template with no context
-    
+
+    template = loader.get_template('pages/home.html')
+    context = {}
+
     if request.method == 'POST':
 
         form = Homepage(request.POST)
         
         if form.is_valid():
-            print(form.cleaned_data)
+            
+            locations = Location.objects.filter(date_of_event__range=[form.cleaned_data["date_from_range"], form.cleaned_data["date_to_range"]])
 
-    template = loader.get_template('pages/home.html')
-    context = {}
+            context.update({'locations': locations })
+            context.update({'form': form})
+
+            return HttpResponse(template.render(context, request))
+
+        else:
+            
+            messages.error(request, "Invalid dates!")
+
     form = Homepage()
-
-    context.update({ "form": form })
-
     locations = Location.objects.all()
-    for location in locations:
-        location.cases = 10
 
+    context.update({'form': form })
     context.update({'locations': locations})
     
     return HttpResponse(template.render(context, request))
+
+
 
 def add_location(request):
     return
@@ -50,20 +62,9 @@ def location_details(request, loc_name):
 
     return HttpResponse(template.render(context, request))
 
-    try:
-        location = Location.objects.get(location_name=loc_name)
-    except:
-        messages.error(request, "Location not found!")
-        return HttpResponse(template.render(context, request))
+def case_details(request, loc_name):
+    return
 
-    context.update(location.get_details())
-
-    return HttpResponse(template.render(context, request))
-
-
-def case_details(request, case_num):
-    template = loader.get_template('pages/case_details.html')
-    context = {}
     try:
         case = Case.objects.get(case_number=case_num)
     except:

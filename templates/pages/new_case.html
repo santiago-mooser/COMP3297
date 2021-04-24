@@ -26,31 +26,68 @@
 
 {% block content %}
 
-      
+
+<div class="heading">
+  <div class="heading-inner">
+    <h3>Add New Case</h3>
+  </div>
+</div>
 
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-8">
-
-      <div class="heading">
-        <div class="heading-inner">
-          <h3>Add New Case</h3>
-        </div>
-      </div>
       
       <form method="post" novalidate>
         {% csrf_token %}
-        {{ form|crispy }}
-        <div class="row button">
+        <div class="container">
+          <div class="row mb-5"></div>
+          <div class="row mb-3">
+            <div class="col-sm text-right text-right">Name</div>
+            <div class="col-sm offset-md-1">{{ form.case_name }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Case Number</div>
+            <div class="col-sm offset-md-1">{{ form.case_number }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Personal ID</div>
+            <div class="col-sm offset-md-1">{{ form.personal_id }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Date of Birth</div>
+            <div class="col-sm offset-md-1">{{ form.date_of_birth }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Date of Onset</div>
+            <div class="col-sm offset-md-1">{{ form.date_of_onset }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Date of Test</div>
+            <div class="col-sm offset-md-1">{{ form.date_of_test }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm text-right">Event</div>
+            <div class="col-sm offset-md-1">{{ form.case_event }}</div>
+            <div class="col-sm offset-md-3"></div>
+          </div>
+          <div class="row">
             <div class="col text-left">
                 <a href="location" class="btn btn-primary">Add New Location</a>
-            </div>
-            <div class="col">
             </div>
             <div class="col text-right">
                 <button type="submit" class="btn btn-primary">Save Case</button>
             </div>
+          </div>
         </div>
+
+        
+        
         <br>
       </form>
     </div>

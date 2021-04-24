@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+{% endblock %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    
+    <div class="heading">
+        <div class="heading-inner">
+            <h3>Potential SSEs</h3>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,42 +1,47 @@
 
-from django.contrib.messages.api import error
-from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import *
 from django.contrib import messages
 from django.template import loader
 from django.http.response import HttpResponse, HttpResponseRedirect
-from .forms import Homepage, New_case, New_location
-
-# Create your views here.
-
+from .forms import *
 
 def homepage(request):
-    # First, like always, load the HTML template with no context
-    
+
+    template = loader.get_template('pages/home.html')
+    context = {}
+
     if request.method == 'POST':
 
         form = Homepage(request.POST)
         
         if form.is_valid():
-            print(form.cleaned_data)
+            
+            locations = Location.objects.filter(date_of_event__range=[form.cleaned_data["date_from_range"], form.cleaned_data["date_to_range"]])
 
-    template = loader.get_template('pages/home.html')
-    context = {}
+            context.update({'locations': locations })
+            context.update({'form': form})
+
+            return HttpResponse(template.render(context, request))
+
+        else:
+            
+            messages.error(request, "Invalid dates!")
+
     form = Homepage()
-
-    context.update({ "form": form })
-
     locations = Location.objects.all()
-    for location in locations:
-        location.cases = 10
 
+    context.update({'form': form })
     context.update({'locations': locations})
     
     return HttpResponse(template.render(context, request))
 
+
+
 def add_location(request):
+
     template = loader.get_template('pages/new_location.html')
+    context={}
 
     if request.method == 'POST':
         form = New_location(request.POST)
@@ -55,32 +60,46 @@ def add_location(request):
             new_loc = Location(
                 name=name,
                 location=loc,
-                Address=addr,
+                address=addr,
                 date_of_event=date,
-                Description_of_event=description,
+                description_of_event=description,
             )
+
+            #Try to save data
             try:
                 new_loc.save()
+
+            #Show error message if not saved successfully 
             except Exception as e:
+
                 print(e)
                 messages.error(request, "Internal server error! Please reload page.")
-                return HttpResponseRedirect('/add/location')
-            
-            messages.success(request, "Details successfully saved.")
-            # TODO: redirect to location details
-            return HttpResponseRedirect('/')
 
-        # If form is invalid
+                context.update({'form': form})
+                return HttpResponse(template.render(context, request))
+            
+            #Redirect to location_details if successfully added
+            messages.success(request, "Details successfully saved.")
+            return redirect(location_details(request, new_loc.name))
+
+        # If form invalid, render this page w/ submitted details
         else:
             messages.error(request, "Please enter valid details.")
-            return HttpResponseRedirect('/add/location')
-    # If method is not POST (is GET)
-    else:
-        form = New_location() # empty form instance
-    return HttpResponse(template.render({'form': form}, request))
+            context.update({'form': form})
+            return HttpResponse(template.render(context, request))
+
+    # If method is not POST, render this page w/ empty form
+    form = New_location()
+    context.update({'form': form})
+
+    return HttpResponse(template.render(context, request))
+
+
 
 def add_case(request):
+
     template = loader.get_template('pages/new_case.html')
+    context={}
 
     if request.method == 'POST':
         form = New_case(request.POST)
@@ -105,27 +124,39 @@ def add_case(request):
                 date_of_birth=dob,
                 date_of_onset=doo,
                 date_of_test=dot,
-                Event=event,
+                event=event,
             )
+
+            # Try to save data
             try:
                 new_case.save()
+
+            # If can't save data, handle and reload page w/ same details
             except Exception as e:
                 print(e)
                 messages.error(request, "Internal server error! Please reload page.")
-                return HttpResponseRedirect('/add/case')
-            
-            messages.success(request, "Details successfully saved.")
-            # TODO: redirect to case details
-            return HttpResponseRedirect('/')
 
-        # If form is invalid
+                context.update({'form': form})
+                return HttpResponse(template.render(context, request))
+            
+            # If successfully saved, redirect to case_details
+            messages.success(request, "Details successfully saved.")
+            return redirect(case_details(request, new_case.case_number))
+
+        # If form is invalid show error message but keep details
         else:
             messages.error(request, "Please enter valid details.")
-            return HttpResponseRedirect('/add/case')
-    # If method is not POST
-    else:
-        form = New_case() # empty form instance
-    return HttpResponse(template.render({'form': form}, request))
+            context.update({'form': form})
+            return HttpResponse(template.render(context, request))
+    
+
+    # Otherwise show render this page with empty form
+    form = New_case()
+    context.update({'form':form})
+
+    return HttpResponse(template.render(context, request))
+
+
 
 def location_details(request, loc_name):
 
@@ -141,8 +172,12 @@ def location_details(request, loc_name):
 
     return HttpResponse(template.render(context, request))
 
-def case_details(request, loc_name):
-    return
+
+
+def case_details(request, case_num):
+    
+    template = loader.get_template('pages/case_details.html')
+    context = {}
 
     try:
         case = Case.objects.get(case_number=case_num)

@@ -10,6 +10,17 @@
 {% block title %}
     Home
 {% endblock %}
+{% block navbar %}
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'add_case' %}">New Case</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'add_location' %}">New Location</a>
+</li>
+{% endblock %}
 
 {% block content %}
     

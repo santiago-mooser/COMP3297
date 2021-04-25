@@ -80,7 +80,7 @@ def add_location(request):
             
             #Redirect to location_details if successfully added
             messages.success(request, "Details successfully saved.")
-            return redirect(location_details, loc_name=new_loc.name)
+            return HttpResponseRedirect('/location/'+new_loc.name)
 
         # If form invalid, render this page w/ submitted details
         else:
@@ -141,7 +141,7 @@ def add_case(request):
             
             # If successfully saved, redirect to case_details
             messages.success(request, "Details successfully saved.")
-            return redirect(case_details, case_num=new_case.case_number)
+            return HttpResponseRedirect('/case/'+new_case.case_number)
 
         # If form is invalid show error message but keep details
         else:
@@ -165,7 +165,7 @@ def location_details(request, loc_name):
     
     # we assume that there's only 1 location with the same name. Specified in Project req doc I think
 
-    location    = Location.objects.filter(name = loc_name)[0] 
+    location    = Location.objects.get(name = loc_name) 
     cases       = Case.objects.filter(event__name__contains = loc_name)
     
     context.update({'location': location, 'cases': cases})

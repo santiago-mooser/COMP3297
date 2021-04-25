@@ -4,7 +4,7 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 class Location(models.Model):
     
-    name                    = models.CharField(max_length=250)
+    name                    = models.CharField(max_length=250, unique=True)
     location                = models.CharField(max_length=250)
     address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()

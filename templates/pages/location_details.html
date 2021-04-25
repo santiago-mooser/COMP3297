@@ -62,7 +62,7 @@
         
                     {% for case in cases %}
                         <tr>
-                            <th scope="row"><a href= "{% url 'case_details' case.id %}">{{case.name}}</a></th>
+                            <th scope="row"><a href= "{% url 'case_details' case.case_number %}">{{case.name}}</a></th>
                             <td>{{case.personal_id}}</td>
                             <td>{{case.case_number}}</td>
                             <td>{{case.date_of_birth}}</td>

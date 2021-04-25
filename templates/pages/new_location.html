@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
+{% endblock %}
+
+{% block title %}
+    Add Location
+{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/case">New Case</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" aria-current="page"href="#">New Location</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="heading">
+  <div class="heading-inner">
+    <h3>Add New Location</h3>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="row button">
+          <div class="col">
+          </div>
+          <div class="col text-right">
+              <button type="submit" class="btn btn-success">Save details</button>
+          </div>
+              <br>
+        </div>
+      </form>
+  </div>
+</div>
+
+{% endblock %}

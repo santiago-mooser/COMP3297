@@ -4,7 +4,7 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 class Location(models.Model):
     
-    name                    = models.CharField(max_length=250)
+    name                    = models.CharField(max_length=250, unique=True)
     location                = models.CharField(max_length=250)
     address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()
@@ -12,6 +12,17 @@ class Location(models.Model):
     
     def __str__(self):
         return self.name
+
+    def get_details(self):
+        details = {
+            "name": self.name,
+            "location": self.location,
+            "address": self.address,
+            "date_of_event": self.date_of_event,
+            "description_of_event": self.description_of_event,
+        }
+
+        return details
 
 class Case(models.Model):
 

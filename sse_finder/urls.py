@@ -13,6 +13,6 @@ urlpatterns = [
     path('add/case', views.add_case, name='add_case'),
 
     path('location/<str:loc_name>', views.location_details, name='location_details'),
-    path('case/<str:case_id>', views.case_details, name='case_details'),
+    path('case/<str:case_num>', views.case_details, name='case_details'),
 
 ]

@@ -168,7 +168,8 @@ def location_details(request, loc_name):
     location    = Location.objects.get(name = loc_name) 
     cases       = Case.objects.filter(event__name__contains = loc_name)
     
-    context.update({'location': location, 'cases': cases})
+    context.update(location.get_details())
+    context.update({"cases":cases})
 
     return HttpResponse(template.render(context, request))
 
@@ -184,6 +185,8 @@ def case_details(request, case_num):
     except:
         messages.error(request, "Case not found!")
         return HttpResponse(template.render(context, request))
+
+    print(case.get_details())
 
     context.update(case.get_details())
 

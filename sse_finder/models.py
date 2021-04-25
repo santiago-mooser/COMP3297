@@ -15,11 +15,13 @@ class Location(models.Model):
 
     def get_details(self):
         details = {
-            "name": self.name,
-            "location": self.location,
-            "address": self.address,
-            "date_of_event": self.date_of_event,
-            "description_of_event": self.description_of_event,
+            "location":{
+                "name": self.name,
+                "location": self.location,
+                "address": self.address,
+                "date_of_event": self.date_of_event,
+                "description_of_event": self.description_of_event,
+            }
         }
 
         return details
@@ -37,13 +39,15 @@ class Case(models.Model):
 
     def get_details(self):
         details = {
-            "name": self.name,
-            "case_number": self.case_number,
-            "personal_id": self.personal_id,
-            "date_of_birth": self.date_of_birth,    
-            "date_of_onset": self.date_of_onset,
-            "date_of_test":self.date_of_test,
-            "event":self.event,
+            "case":{
+                "name": self.name,
+                "case_number": self.case_number,
+                "personal_id": self.personal_id,
+                "date_of_birth": self.date_of_birth,    
+                "date_of_onset": self.date_of_onset,
+                "date_of_test":self.date_of_test,
+                "event":self.event,
+            }
         }
 
         return details

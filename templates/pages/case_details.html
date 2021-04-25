@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/location_details.css' %}">
+{% endblock %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/case">New Case</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/location">New Location</a>
+</li>
+{% endblock %}
+
+{% block content %}
+    
+    <div class="heading">
+        <div class="heading-inner">
+            <h3>{{ case.name}}</h3>
+        </div>
+    </div> 
+    
+    <br>
+    
+    <div class="table-container">
+        <div class="table-inner">
+            <table class="table">
+
+                <thead class="table-dark bg-primary">
+        
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Personal ID</th>
+                    <th scope="col">Case Number</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Date of Onset</th>
+                    <th scope="col">Date of Test</th>
+                </tr>
+        
+                </thead>
+        
+                <tbody>
+                        <tr>
+                            <td>{{case.name}}</td>
+                            <td>{{case.personal_id}}</td>
+                            <td>{{case.case_number}}</td>
+                            <td>{{case.date_of_birth}}</td>
+                            <td>{{case.date_of_onset}}</td>
+                            <td>{{case.date_of_test}}</td>
+                        </tr>
+                </tbody>
+        
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -5,7 +5,7 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 {% endblock %}
 
@@ -33,64 +33,24 @@
   </div>
 </div>
 
+<br>
+
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-8">
-      
       <form method="post" novalidate>
         {% csrf_token %}
-        <div class="container">
-          <div class="row mb-5"></div>
-          <div class="row mb-3">
-            <div class="col-sm text-right text-right">Name</div>
-            <div class="col-sm offset-md-1">{{ form.case_name }}</div>
-            <div class="col-sm offset-md-3"></div>
+        {% bootstrap_form form %}
+        <div class="row button">
+          <div class="col">
           </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Case Number</div>
-            <div class="col-sm offset-md-1">{{ form.case_number }}</div>
-            <div class="col-sm offset-md-3"></div>
+          <div class="col text-right">
+              <button type="submit" class="btn btn-success">Save details</button>
           </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Personal ID</div>
-            <div class="col-sm offset-md-1">{{ form.personal_id }}</div>
-            <div class="col-sm offset-md-3"></div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Date of Birth</div>
-            <div class="col-sm offset-md-1">{{ form.date_of_birth }}</div>
-            <div class="col-sm offset-md-3"></div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Date of Onset</div>
-            <div class="col-sm offset-md-1">{{ form.date_of_onset }}</div>
-            <div class="col-sm offset-md-3"></div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Date of Test</div>
-            <div class="col-sm offset-md-1">{{ form.date_of_test }}</div>
-            <div class="col-sm offset-md-3"></div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-sm text-right">Event</div>
-            <div class="col-sm offset-md-1">{{ form.case_event }}</div>
-            <div class="col-sm offset-md-3"></div>
-          </div>
-          <div class="row">
-            <div class="col text-left">
-                <a href="location" class="btn btn-primary">Add New Location</a>
-            </div>
-            <div class="col text-right">
-                <button type="submit" class="btn btn-primary">Save Case</button>
-            </div>
-          </div>
+              <br>
         </div>
-
-        
-        
-        <br>
       </form>
-    </div>
   </div>
 </div>
 

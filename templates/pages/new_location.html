@@ -4,7 +4,7 @@
 {% load bootstrap4 %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -25,22 +25,30 @@
 
 {% block content %}
 
-<br>
-<br>
-<h1>Add New Location</h1>
+<div class="heading">
+  <div class="heading-inner">
+    <h3>Add New Location</h3>
+  </div>
+</div>
+
 <br>
 
-<form method="post"  novalidate>
-  {% csrf_token %}
-  {% bootstrap_form form %}
-  <div class="row button">
-      <div class="col">
-      </div>
-      <div class="col text-right">
-          <button type="submit" class="btn btn-primary">Add Location</button>
-      </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="row button">
+          <div class="col">
+          </div>
+          <div class="col text-right">
+              <button type="submit" class="btn btn-success">Save details</button>
+          </div>
+              <br>
+        </div>
+      </form>
   </div>
-  <br>
-</form>
+</div>
 
 {% endblock %}

@@ -18,6 +18,7 @@ Django = "==3.2"
 django-environs = "*"
 gunicorn = "*"
 whitenoise = "*"
+environs = "*"
 
 [dev-packages]
 

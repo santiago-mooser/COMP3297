@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: start;
     background-color: rgb(248, 247, 233);
+    position: relative;
 }
 
 .container
@@ -25,12 +26,10 @@
     padding: 0 2rem;
 }
 
-.footer
+footer
 {
-    display: flex;
-    justify-content: center;
     position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
     bottom: 0;
+    left: 0;
+    width: 100%;
 }

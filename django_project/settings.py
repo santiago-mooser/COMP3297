@@ -26,7 +26,7 @@ SECRET_KEY = 'v$2^s=x%xo02&uz=@_)t9(tt6(r0uc5syg$-&+ank8u6d554k1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["app", "localhost", '.herokuapp.com']
+ALLOWED_HOSTS = ["group-s-sse-finder.herokuapp.com","app", "localhost", '.herokuapp.com']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -121,3 +122,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))

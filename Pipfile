@@ -19,7 +19,6 @@ django-environs = "*"
 gunicorn = "*"
 whitenoise = "*"
 environs = "*"
-requests = "*"
 
 [dev-packages]
 

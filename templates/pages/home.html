@@ -56,8 +56,12 @@
                 <thead class="table-dark bg-primary">
         
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Location Address</th>
+                    <th scope="col">Venue name</th>
+                    <th scope="col">Building Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">X coordinate</th>
+                    <th scope="col">Y coordinate</th>
+                    <th scope="col">Date of Event</th>
                     <th scope="col">Cases</th>
                 </tr>
         
@@ -67,9 +71,13 @@
         
                     {% for location in locations %}
                         <tr>
-                            <th scope="row"><a href= "{% url 'location_details' location.name %}">{{location}}</a></th>
+                            <th scope="row"><a href= "{% url 'location_details' location.venue_name %}">{{location.venue_name}}</a></th>
+                            <td>{{location.building_name}}</td>
                             <td>{{location.address}}</td>
-                            <td>{{location.cases}}</td>
+                            <td>{{location.coordinate_x}}</td>
+                            <td>{{location.coordinate_y}}</td>
+                            <td>{{location.date_of_event}}</td>
+                            <td>{{location.case_num}}</td>
                         </tr>
                     {% endfor %}
         

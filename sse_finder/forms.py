@@ -15,12 +15,10 @@ class Homepage(forms.Form):
 
 class New_location(forms.Form):
 
-    location_name           = forms.CharField(max_length=250, label='Location name'
+    venue_name              = forms.CharField(max_length=250, label='Venue name'
                                                 , widget= forms.TextInput(attrs={'placeholder':'e.g. a restaurant name'}))
-    location                = forms.CharField(max_length=250, label='Location'
+    building_name           = forms.CharField(max_length=250, label='Building name'
                                                 , widget= forms.TextInput(attrs={'placeholder':'e.g. a building name'}))
-    address                 = forms.CharField(max_length=250, label='Address'
-                                                , widget= forms.TextInput(attrs={'placeholder':'Don\'t worry, backend will handle this'}))
     date_of_event           = forms.DateField(label='Date of Event'
                                                 , widget=DateInput)
     description_of_event    = forms.CharField(max_length=1000, label='Description of event'
@@ -29,7 +27,7 @@ class New_location(forms.Form):
 
     class Meta:
         model   = Location
-        fields  = ('location_name', 'location', 'address', 'date_of_event', 'description_of_event')
+        fields  = ('venue_name', 'building_name', 'address', 'date_of_event', 'description_of_event')
         
 
     def __init__(self, *args, **kwargs):
@@ -54,7 +52,7 @@ class New_case(forms.Form):
     date_of_test    = forms.DateField(label='Date of Positive Test'
                                          , widget=DateInput)
     case_event      = forms.ModelChoiceField(label='Event'
-                                         , queryset=Location.objects.all().order_by('name')
+                                         , queryset=Location.objects.all().order_by('venue_name')
                                          , required=False)
 
     class Meta:

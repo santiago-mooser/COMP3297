@@ -1,5 +1,3 @@
-
-from django.shortcuts import redirect
 from .models import *
 from django.contrib import messages
 from django.template import loader
@@ -16,10 +14,15 @@ def homepage(request):
         form = Homepage(request.POST)
         
         if form.is_valid():
-            
-            locations = Location.objects.filter(date_of_event__range=[form.cleaned_data["date_from_range"], form.cleaned_data["date_to_range"]])
 
-            context.update({'locations': locations })
+            locations = Location.objects.filter(date_of_event__range=[form.cleaned_data["date_from_range"], form.cleaned_data["date_to_range"]])
+            
+            events=[]
+
+            for event in locations:
+                events.append(event.get_details().get("location"))
+            
+            context.update({'locations': events })
             context.update({'form': form})
 
             return HttpResponse(template.render(context, request))
@@ -31,9 +34,14 @@ def homepage(request):
     form = Homepage()
     locations = Location.objects.all()
 
+    events=[]
+
+    for event in locations:
+        events.append(event.get_details().get("location"))
+
     context.update({'form': form })
-    context.update({'locations': locations})
-    
+    context.update({'locations': events})
+
     return HttpResponse(template.render(context, request))
 
 
@@ -58,8 +66,8 @@ def add_location(request):
 
             # Create new instance of model Case
             new_loc = Location(
-                name=name,
-                location=loc,
+                venue_name=name,
+                building_name=loc,
                 address=addr,
                 date_of_event=date,
                 description_of_event=description,
@@ -165,11 +173,15 @@ def location_details(request, loc_name):
     
     # we assume that there's only 1 location with the same name. Specified in Project req doc I think
 
-    location    = Location.objects.get(name = loc_name) 
-    cases       = Case.objects.filter(event__name__contains = loc_name)
+    location    = Location.objects.get(venue_name = loc_name) 
+    cases       = Case.objects.filter(event__venue_name__contains = loc_name)
     
+
+
     context.update(location.get_details())
     context.update({"cases":cases})
+
+    print(context)
 
     return HttpResponse(template.render(context, request))
 
@@ -191,8 +203,3 @@ def case_details(request, case_num):
     context.update(case.get_details())
 
     return HttpResponse(template.render(context, request))
-
-
-
-def proxy(request):
-    return

@@ -174,8 +174,6 @@ def location_details(request, loc_name):
     location    = Location.objects.get(venue_name = loc_name) 
     cases       = Case.objects.filter(event__venue_name__contains = loc_name)
     
-
-
     context.update(location.get_details())
     context.update({"cases":cases})
 

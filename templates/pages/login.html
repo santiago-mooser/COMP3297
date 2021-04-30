@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/login.css' %}">
+{% endblock %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+<div class="form-wrapper">
+    <form action="" class="form" method="POST">
+        <div class="logo">
+            <img class="mb-4" src="{% static 'sse_finder/logo.png' %}" alt="" width="90" height="90">
+        </div>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+
+<style>
+
+    .form-wrapper
+    {
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    form
+    {
+        width: 50%;
+    }
+
+    .logo
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button
+    {
+        margin-top: 2rem;
+    }
+
+</style>
+
+{% endblock %}

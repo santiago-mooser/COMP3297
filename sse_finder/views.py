@@ -58,9 +58,8 @@ def add_location(request):
         if form.is_valid():
 
             # Extract data from form
-            name = form.cleaned_data['location_name']
-            loc = form.cleaned_data['location']
-            addr = form.cleaned_data['address']
+            name = form.cleaned_data['venue_name']
+            loc = form.cleaned_data['building_name']
             date = form.cleaned_data['date_of_event']
             description = form.cleaned_data['description_of_event']
 
@@ -68,7 +67,6 @@ def add_location(request):
             new_loc = Location(
                 venue_name=name,
                 building_name=loc,
-                address=addr,
                 date_of_event=date,
                 description_of_event=description,
             )
@@ -88,7 +86,7 @@ def add_location(request):
             
             #Redirect to location_details if successfully added
             messages.success(request, "Details successfully saved.")
-            return HttpResponseRedirect('/location/'+new_loc.name)
+            return HttpResponseRedirect('/location/'+new_loc.venue_name)
 
         # If form invalid, render this page w/ submitted details
         else:
@@ -181,8 +179,6 @@ def location_details(request, loc_name):
     context.update(location.get_details())
     context.update({"cases":cases})
 
-    print(context)
-
     return HttpResponse(template.render(context, request))
 
 
@@ -197,8 +193,6 @@ def case_details(request, case_num):
     except:
         messages.error(request, "Case not found!")
         return HttpResponse(template.render(context, request))
-
-    print(case.get_details())
 
     context.update(case.get_details())
 

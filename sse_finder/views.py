@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.template import loader
 from django.http.response import HttpResponse, HttpResponseRedirect
 from .forms import *
+import datetime
 
 def homepage(request):
 
@@ -120,7 +121,7 @@ def add_case(request):
             dob      = form.cleaned_data['date_of_birth']
             doo      = form.cleaned_data['date_of_onset']
             dot      = form.cleaned_data['date_of_test']
-            event    = form.cleaned_data['case_event']
+            events   = form.cleaned_data['case_event']
 
             # Create new instance of model Case
             new_case = Case(
@@ -130,7 +131,6 @@ def add_case(request):
                 date_of_birth=dob,
                 date_of_onset=doo,
                 date_of_test=dot,
-                event=event,
             )
 
             # Try to save data
@@ -144,6 +144,10 @@ def add_case(request):
 
                 context.update({'form': form})
                 return HttpResponse(template.render(context, request))
+            
+            for event in events:
+                event.attendees.add(new_case)
+                event.save()
             
             # If successfully saved, redirect to case_details
             messages.success(request, "Details successfully saved.")
@@ -172,7 +176,7 @@ def location_details(request, loc_name):
     # we assume that there's only 1 location with the same name. Specified in Project req doc I think
 
     location    = Location.objects.get(venue_name = loc_name) 
-    cases       = Case.objects.filter(event__venue_name__contains = loc_name)
+    cases       = location.attendees.all()
     
 
 
@@ -190,10 +194,15 @@ def case_details(request, case_num):
 
     try:
         case = Case.objects.get(case_number=case_num)
+        events = case.location_set.all()
     except:
         messages.error(request, "Case not found!")
         return HttpResponse(template.render(context, request))
 
     context.update(case.get_details())
+    details={}
+    for event in events:
+        details.update({event.venue_name: event.get_details()})
+        context.update({"events":details})
 
     return HttpResponse(template.render(context, request))

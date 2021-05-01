@@ -2,36 +2,36 @@
 {% load static %}
 
 {% load bootstrap4 %}
-{% load crispy_forms_tags %}
 
 {% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
     <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
 {% endblock %}
 
 {% block title %}
-    Add Case
+    Search Case
 {% endblock %}
+
 {% block navbar %}
 <li class="nav-item">
-    <a class="nav-link" href="/">Home</a>
+  <a class="nav-link" href="/">Home</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link active" aria-current="page" href="{% url 'add_case' %}">New Case</a>
+  <a class="nav-link" href="/add/case">New Case</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'add_location' %}">New Location</a>
+  <a class="nav-link" href="/add/location">New Location</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="/find/case">Find Case</a>
+  <a class="nav-link active" aria-current="page"href="#">Find Case</a>
 </li>
 {% endblock %}
 
 {% block content %}
 
-
 <div class="heading">
   <div class="heading-inner">
-    <h3>Add New Case</h3>
+    <h3>Find Specific Case</h3>
   </div>
 </div>
 
@@ -39,21 +39,15 @@
 
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-8 text-right">
-      <a class="btn btn-primary button" role="button" href="{% url 'add_location'%}">Add Location</a>
-    </div>
-  </div>
-  <div class="row justify-content-center">
     <div class="col-8">
       <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="row button">
-          <div class="col">
+          <div class="col text-left">
+              <button type="submit" class="btn btn-success">Search</button>
           </div>
-          <div class="col text-right">
-              <button type="submit" class="btn btn-success">Save details</button>
-          </div>
+          <br>
         </div>
       </form>
   </div>

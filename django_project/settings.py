@@ -82,18 +82,7 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    ### Heroku
-    # 'default': env.dj_db_url('DATABASE_URL')
-
-    ### Local dev
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'ssefinder', # change to your local database name
-        'USER': 'betalabs', # change to the owner of your local database
-        'PASSWORD': 'betalabs', # change
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': env.dj_db_url('DATABASE_URL')
 }
 
 # Password validation

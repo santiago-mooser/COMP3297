@@ -66,8 +66,8 @@
         
                 </thead>
         
+                <h3>Events attended</h3>
                 <tbody>
-        
                     {% for location in events.items %}
                         <tr>
                             <th scope="row"><a href= "{% url 'location_details' location.0 %}">{{location.0}}</a></th>

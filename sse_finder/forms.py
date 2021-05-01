@@ -65,3 +65,13 @@ class New_case(forms.Form):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Add case'))
+
+class Find_case(forms.Form):
+    case_number     = forms.CharField(max_length=25, label='What is the Case Number?'
+                                         , widget= forms.TextInput(attrs={'placeholder':'Enter case number'}))
+    # TODO: Data validation
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     case_number = cleaned_data.get("case_number")
+
+    #     if not isinstance(case_number)

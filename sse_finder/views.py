@@ -197,3 +197,44 @@ def case_details(request, case_num):
     context.update(case.get_details())
 
     return HttpResponse(template.render(context, request))
+
+def find_case(request):
+    
+    template = loader.get_template('pages/find_case.html')
+    context = {}
+
+    if request.method == 'POST':
+        form = Find_case(request.POST)
+
+        # check if the form is valid
+        if form.is_valid():
+
+            # Extract data from form
+            case_num     = form.cleaned_data['case_number']
+            
+            # Retrive case from database, show error if not exists
+            try:
+                case = Case.objects.get(case_number=case_num)
+                template = loader.get_template('pages/case_details.html')
+                context = case.get_details()
+                return HttpResponse(template.render(context, request))
+            except Case.DoesNotExist:
+                return HttpResponseRedirect('/find/error')
+
+
+        # if invalid form
+        else:
+            messages.error(request, "Please enter valid details.")
+            context.update({'form': form})
+            return HttpResponse(template.render(context, request))
+    
+    form = Find_case()
+    context.update({'form':form})
+
+    return HttpResponse(template.render(context, request))
+
+def find_error(request):
+    template = loader.get_template('pages/find_error.html')
+    context = {}
+
+    return HttpResponse(template.render(context, request))

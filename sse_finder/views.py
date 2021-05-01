@@ -228,12 +228,10 @@ def find_case(request):
             # Retrive case from database, show error if not exists
             try:
                 case = Case.objects.get(case_number=case_num)
-                template = loader.get_template('pages/case_details.html')
-                context = case.get_details()
-                return HttpResponse(template.render(context, request))
+                return HttpResponseRedirect('/case/'+case.case_number)
+
             except Case.DoesNotExist:
                 return HttpResponseRedirect('/find/error')
-
 
         # if invalid form
         else:
@@ -245,6 +243,8 @@ def find_case(request):
     context.update({'form':form})
 
     return HttpResponse(template.render(context, request))
+
+
 
 def find_error(request):
     template = loader.get_template('pages/find_error.html')

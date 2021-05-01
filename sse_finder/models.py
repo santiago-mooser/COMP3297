@@ -63,7 +63,7 @@ class Case(models.Model):
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()
-    event           = models.ForeignKey(Location, on_delete=models.CASCADE)
+    event           = models.ForeignKey(Location, on_delete=CASCADE, blank=True, null=True)
 
     def get_details(self):
         details = {
@@ -74,7 +74,7 @@ class Case(models.Model):
                 "date_of_birth": self.date_of_birth,    
                 "date_of_onset": self.date_of_onset,
                 "date_of_test":self.date_of_test,
-                "event":self.event,
+                "event": self.event,
             }
         }
 

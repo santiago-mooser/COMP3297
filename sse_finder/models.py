@@ -7,7 +7,34 @@ import requests, json
 
 from requests.models import CaseInsensitiveDict
 
-# Create your models here.
+class Case(models.Model):
+
+    name            = models.CharField(max_length=150)
+    case_number     = models.CharField(max_length=25, unique=True)
+    personal_id     = models.CharField(max_length=25, unique=True)
+    date_of_birth   = models.DateField()
+    date_of_onset   = models.DateField()
+    date_of_test    = models.DateField()
+    
+    def get_details(self):
+        details = {
+            "case":{
+                "name": self.name,
+                "case_number": self.case_number,
+                "personal_id": self.personal_id,
+                "date_of_birth": self.date_of_birth,    
+                "date_of_onset": self.date_of_onset,
+                "date_of_test":self.date_of_test,
+            }
+        }
+
+        return details
+
+    def __str__(self):
+        return self.name
+
+
+
 class Location(models.Model):
     
     venue_name              = models.CharField(max_length=250, unique=True)
@@ -17,7 +44,8 @@ class Location(models.Model):
     address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()
     description_of_event    = models.CharField(max_length=1000)
-    
+    attendees               = models.ManyToManyField(Case)
+
     def __str__(self):
         return self.venue_name
 
@@ -31,7 +59,7 @@ class Location(models.Model):
                 "coordinate_y": self.coordinate_y,
                 "date_of_event": self.date_of_event,
                 "description_of_event": self.description_of_event,
-                "case_num": self.case_set.count()
+                "case_num": self.attendees.count()
             }
         }
 
@@ -52,33 +80,3 @@ def retrieve_coordinates(sender, instance, *args, **kwargs):
     instance.coordinate_x = details.get("x")
     instance.coordinate_y = details.get("y")
     instance.address = details.get("addressEN")
-
-
-
-class Case(models.Model):
-
-    name            = models.CharField(max_length=150)
-    case_number     = models.CharField(max_length=25, unique=True)
-    personal_id     = models.CharField(max_length=25, unique=True)
-    date_of_birth   = models.DateField()
-    date_of_onset   = models.DateField()
-    date_of_test    = models.DateField()
-    event           = models.ForeignKey(Location, on_delete=CASCADE, blank=True, null=True)
-
-    def get_details(self):
-        details = {
-            "case":{
-                "name": self.name,
-                "case_number": self.case_number,
-                "personal_id": self.personal_id,
-                "date_of_birth": self.date_of_birth,    
-                "date_of_onset": self.date_of_onset,
-                "date_of_test":self.date_of_test,
-                "event": self.event,
-            }
-        }
-
-        return details
-
-    def __str__(self):
-        return self.name

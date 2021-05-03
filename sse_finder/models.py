@@ -36,7 +36,7 @@ class Case(models.Model):
 class Location(models.Model):
     
     venue_name              = models.CharField(max_length=250, unique=True)
-    building_name           = models.CharField(max_length=250, unique=True)
+    building_name           = models.CharField(max_length=250)
     coordinate_x            = models.IntegerField(null=True)
     coordinate_y            = models.IntegerField(null=True)
     address                 = models.CharField(max_length=250)

@@ -4,6 +4,8 @@ from django.template import loader
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import redirect
 from .forms import *
 
 @login_required(login_url='/login')
@@ -205,18 +207,24 @@ def login_view(request):
     context = {}
 
     if request.method == 'POST':
-        input_username = request.POST.get("inputUsername")
-        input_password = request.POST.get("inputPassword")
+        form = AuthenticationForm(request, data=request.POST)
 
-        user = authenticate(request, username=input_username, password=input_password)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
 
-        if user is not None: # user is authenticated
-            login(request, user)
-            # redirect to home
-            return redirect('/home')
+            if user is not None: # user is authenticated
+                login(request, user)
+                # redirect to home
+                return redirect('/home')
+            else:
+                # return login error page
+                messages.error(request,"Invalid username or password.")
         else:
-            # return login error page
-            return 0
+            messages.error(reqeuest,"Invalid username or password.")
 
+    form = AuthenticationForm()
+    context.update({'login_form': form})
 
     return HttpResponse(template.render(context,request))

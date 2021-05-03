@@ -3,6 +3,7 @@
 
 
 {% load bootstrap4 %}
+{% load crispy_forms_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'sse_finder/css/login.css' %}">
@@ -21,10 +22,7 @@
             <img class="mb-4" src="{% static 'sse_finder/logo.png' %}" alt="" width="90" height="90">
         </div>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputUsername" class="sr-only">Email address</label>
-        <input type="email" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required="">
+        {{ login_form|crispy }}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 </div>

@@ -39,6 +39,8 @@ def homepage(request):
 
     for event in locations:
         events.append(event.get_details().get("location"))
+    
+    events = sorted(events, key = lambda i: i['case_num'], reverse=True)
 
     context.update({'form': form })
     context.update({'locations': events})

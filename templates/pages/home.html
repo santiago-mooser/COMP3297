@@ -74,6 +74,15 @@
         
                     {% for location in locations %}
                         <tr>
+                            {% if location.case_num > 5%}
+                            <th scope="row" class="table-danger"><a href= "{% url 'location_details' location.venue_name %}">{{location.venue_name}}</a></th>
+                            <td class="table-danger">{{location.building_name}}</td>
+                            <td class="table-danger">{{location.address}}</td>
+                            <td class="table-danger">{{location.coordinate_x}}</td>
+                            <td class="table-danger">{{location.coordinate_y}}</td>
+                            <td class="table-danger">{{location.date_of_event}}</td>
+                            <td class="table-danger">{{location.case_num}}</td>
+                            {% else %}
                             <th scope="row"><a href= "{% url 'location_details' location.venue_name %}">{{location.venue_name}}</a></th>
                             <td>{{location.building_name}}</td>
                             <td>{{location.address}}</td>
@@ -81,6 +90,7 @@
                             <td>{{location.coordinate_y}}</td>
                             <td>{{location.date_of_event}}</td>
                             <td>{{location.case_num}}</td>
+                            {% endif%}
                         </tr>
                     {% endfor %}
         

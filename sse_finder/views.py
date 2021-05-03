@@ -146,8 +146,10 @@ def add_case(request):
                 return HttpResponse(template.render(context, request))
             
             for event in events:
-                event.attendees.add(new_case)
-                event.save()
+                try:
+                    event.add_attendee(new_case)
+                except:
+                    messages.error(request, "Failed to add case to "+event+": Date missmatch.")
             
             # If successfully saved, redirect to case_details
             messages.success(request, "Details successfully saved.")

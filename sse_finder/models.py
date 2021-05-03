@@ -3,9 +3,7 @@ from django.db.models.deletion import CASCADE
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-import requests, json
-
-from requests.models import CaseInsensitiveDict
+import requests, datetime
 
 class Case(models.Model):
 
@@ -48,6 +46,17 @@ class Location(models.Model):
 
     def __str__(self):
         return self.venue_name
+
+    def add_attendee(self, case):
+
+        if(self.date_of_event > (case.date_of_onset - datetime.timedelta(days=14)) 
+        and self.date_of_event< case.date_of_test):
+            self.attendees.add(case)
+        else:
+            try:
+                pass
+            except:
+                raise
 
     def get_details(self):
         details = {

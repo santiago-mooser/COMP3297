@@ -201,14 +201,14 @@ def case_details(request, case_num):
 
 
 def login_view(request):
-
     template = loader.get_template('pages/login.html')
     context = {}
 
     if request.method == 'POST':
-        input_email = request.POST.get("inputEmail")
+        input_username = request.POST.get("inputUsername")
         input_password = request.POST.get("inputPassword")
-        user = authenticate(request, email=input_email, password=input_password)
+
+        user = authenticate(request, username=input_username, password=input_password)
 
         if user is not None: # user is authenticated
             login(request, user)

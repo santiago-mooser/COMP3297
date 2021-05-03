@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% load bootstrap4 %}
 
 {% block css %}
@@ -15,6 +16,7 @@
 
 <div class="form-wrapper">
     <form action="" class="form" method="POST">
+        {% csrf_token %}
         <div class="logo">
             <img class="mb-4" src="{% static 'sse_finder/logo.png' %}" alt="" width="90" height="90">
         </div>

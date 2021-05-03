@@ -3,13 +3,15 @@ from django.db.models.deletion import CASCADE
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-import requests, json
+import requests
+import json
 
 from requests.models import CaseInsensitiveDict
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Location(models.Model):
-    
+
     venue_name              = models.CharField(max_length=250, unique=True)
     building_name           = models.CharField(max_length=250, unique=True)
     coordinate_x            = models.IntegerField(null=True)
@@ -17,7 +19,7 @@ class Location(models.Model):
     address                 = models.CharField(max_length=250)
     date_of_event           = models.DateField()
     description_of_event    = models.CharField(max_length=1000)
-    
+
     def __str__(self):
         return self.venue_name
 
@@ -48,7 +50,7 @@ def retrieve_coordinates(sender, instance, *args, **kwargs):
     details = response.json()[0]
 
     print(details)
-    
+
     instance.coordinate_x = details.get("x")
     instance.coordinate_y = details.get("y")
     instance.address = details.get("addressEN")
@@ -71,7 +73,7 @@ class Case(models.Model):
                 "name": self.name,
                 "case_number": self.case_number,
                 "personal_id": self.personal_id,
-                "date_of_birth": self.date_of_birth,    
+                "date_of_birth": self.date_of_birth,
                 "date_of_onset": self.date_of_onset,
                 "date_of_test":self.date_of_test,
                 "event":self.event,
@@ -82,3 +84,11 @@ class Case(models.Model):
 
     def __str__(self):
         return self.name
+
+class CHP_User(models.Model):
+    # add field for CHP id number
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    staff_number = models.CharField(max_length=6, unique=True)
+
+    def __str__(self):
+        return self.staff_number

@@ -2,8 +2,11 @@ from .models import *
 from django.contrib import messages
 from django.template import loader
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .forms import *
 
+@login_required(login_url='/login')
 def homepage(request):
 
     template = loader.get_template('pages/home.html')
@@ -12,23 +15,23 @@ def homepage(request):
     if request.method == 'POST':
 
         form = Homepage(request.POST)
-        
+
         if form.is_valid():
 
             locations = Location.objects.filter(date_of_event__range=[form.cleaned_data["date_from_range"], form.cleaned_data["date_to_range"]])
-            
+
             events=[]
 
             for event in locations:
                 events.append(event.get_details().get("location"))
-            
+
             context.update({'locations': events })
             context.update({'form': form})
 
             return HttpResponse(template.render(context, request))
 
         else:
-            
+
             messages.error(request, "Invalid dates!")
 
     form = Homepage()
@@ -45,7 +48,7 @@ def homepage(request):
     return HttpResponse(template.render(context, request))
 
 
-
+@login_required(login_url='/login')
 def add_location(request):
 
     template = loader.get_template('pages/new_location.html')
@@ -75,7 +78,7 @@ def add_location(request):
             try:
                 new_loc.save()
 
-            #Show error message if not saved successfully 
+            #Show error message if not saved successfully
             except Exception as e:
 
                 print(e)
@@ -83,7 +86,7 @@ def add_location(request):
 
                 context.update({'form': form})
                 return HttpResponse(template.render(context, request))
-            
+
             #Redirect to location_details if successfully added
             messages.success(request, "Details successfully saved.")
             return HttpResponseRedirect('/location/'+new_loc.venue_name)
@@ -101,7 +104,7 @@ def add_location(request):
     return HttpResponse(template.render(context, request))
 
 
-
+@login_required(login_url='/login')
 def add_case(request):
 
     template = loader.get_template('pages/new_case.html')
@@ -144,7 +147,7 @@ def add_case(request):
 
                 context.update({'form': form})
                 return HttpResponse(template.render(context, request))
-            
+
             # If successfully saved, redirect to case_details
             messages.success(request, "Details successfully saved.")
             return HttpResponseRedirect('/case/'+new_case.case_number)
@@ -154,7 +157,7 @@ def add_case(request):
             messages.error(request, "Please enter valid details.")
             context.update({'form': form})
             return HttpResponse(template.render(context, request))
-    
+
 
     # Otherwise show render this page with empty form
     form = New_case()
@@ -163,26 +166,26 @@ def add_case(request):
     return HttpResponse(template.render(context, request))
 
 
-
+@login_required(login_url='/login')
 def location_details(request, loc_name):
 
     template = loader.get_template('pages/location_details.html')
     context = {}
-    
+
     # we assume that there's only 1 location with the same name. Specified in Project req doc I think
 
-    location    = Location.objects.get(venue_name = loc_name) 
+    location    = Location.objects.get(venue_name = loc_name)
     cases       = Case.objects.filter(event__venue_name__contains = loc_name)
-    
+
     context.update(location.get_details())
     context.update({"cases":cases})
 
     return HttpResponse(template.render(context, request))
 
 
-
+@login_required(login_url='/login')
 def case_details(request, case_num):
-    
+
     template = loader.get_template('pages/case_details.html')
     context = {}
 
@@ -195,3 +198,25 @@ def case_details(request, case_num):
     context.update(case.get_details())
 
     return HttpResponse(template.render(context, request))
+
+
+def login_view(request):
+
+    template = loader.get_template('pages/login.html')
+    context = {}
+
+    if request.method == 'POST':
+        input_email = request.POST.get("inputEmail")
+        input_password = request.POST.get("inputPassword")
+        user = authenticate(request, email=input_email, password=input_password)
+
+        if user is not None: # user is authenticated
+            login(request, user)
+            # redirect to home
+            return redirect('/home')
+        else:
+            # return login error page
+            return 0
+
+
+    return HttpResponse(template.render(context,request))

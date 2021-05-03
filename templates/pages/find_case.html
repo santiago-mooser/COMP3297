@@ -4,8 +4,6 @@
 {% load bootstrap4 %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
-    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -29,28 +27,34 @@
 
 {% block content %}
 
-<div class="heading">
-  <div class="heading-inner">
-    <h3>Find Specific Case</h3>
-  </div>
-</div>
-
 <br>
 
 <div class="container">
+
   <div class="row justify-content-center">
     <div class="col-8">
+
+      <div class="heading text-left">
+        <div class="heading-inner">
+          <h3>Find Specific Case</h3>
+          <br>
+        </div>
+      </div>
+
       <form method="post" novalidate>
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="row button">
-          <div class="col text-left">
+          <div class="col text-right">
               <button type="submit" class="btn btn-success">Search</button>
           </div>
           <br>
         </div>
       </form>
+
+    </div>
   </div>
+
 </div>
 
 {% endblock %}

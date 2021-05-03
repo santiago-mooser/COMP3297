@@ -209,8 +209,6 @@ def case_details(request, case_num):
         details.update({event.venue_name: event.get_details().get("location")})
         context.update({"events":details})
 
-    print(context)
-
     return HttpResponse(template.render(context, request))
 
 

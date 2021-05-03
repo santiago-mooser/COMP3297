@@ -22,9 +22,9 @@
 
 </head>
 <meta name="Description" content="Editable COVID-19 super interface designed and deployed for COMP3297 of HKU">
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 wrapper">
     <div class="container-fluid text-center">
-        <div class="row content">
+        <div class="col content">
             <div class="col-sm-2 sidenav" style="background-color: rgb(248, 247, 233)">
                 <div id="messages-container">
                     {% bootstrap_messages %}
@@ -58,21 +58,21 @@
                 {% block content %}
                 {% endblock %}
 
-                            <!-- Footer -->
+            </div>
+
+            <!-- Footer -->
+            <div class="footer-container">
                 <footer class="page-footer font-small blue footer">
 
                     <!-- Copyright -->
                     <div class="footer-copyright text-center py-3">© 2021 Copyright:
-                    <a> Betalabs</a>
+                    <a style="font-weight: bold;"> Betalabs</a>
                     </div>
                     <!-- Copyright -->
                 
                 </footer>
                 <!-- Footer -->
-            </div>
-            
-            <div class="col-sm-2 sidenav" style="background-color: rgb(248, 247, 233)">
-                <div class="col"></div>
+                
             </div>
         </div>
     </div>

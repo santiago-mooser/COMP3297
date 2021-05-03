@@ -85,6 +85,18 @@ DATABASES = {
     'default': env.dj_db_url('DATABASE_URL')
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': ,
+#         'USER': ,
+#         'PASSWORD': ,
+#         'HOST': 'localhost',
+#         'PORT': ,
+#     }
+
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

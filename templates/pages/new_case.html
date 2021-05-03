@@ -5,7 +5,6 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -28,24 +27,29 @@
 
 {% block content %}
 
-
-<div class="heading">
-  <div class="heading-inner">
-    <h3>Add New Case</h3>
-  </div>
-</div>
-
-<br>
-
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-8 text-right">
-      <a class="btn btn-primary button" role="button" href="{% url 'add_location'%}">Add Location</a>
-    </div>
-  </div>
+
   <div class="row justify-content-center">
     <div class="col-8">
-      <form method="post" novalidate>
+
+      <div class="heading">
+        <div class="row">
+          <div class="col text-left">
+            <br>
+            <h3>Add New Case</h3>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <form method="post">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col text-right">
+            <a class="btn btn-primary button" role="button" href="{% url 'add_location'%}">Add Location</a>
+          </div>
+        </div>
+
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="row button">
@@ -56,7 +60,12 @@
           </div>
         </div>
       </form>
+
+
+    </div>
   </div>
+  
 </div>
+
 
 {% endblock %}

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block title %}
-    Add Location
+    Search Case
 {% endblock %}
 
 {% block navbar %}
@@ -18,10 +18,10 @@
   <a class="nav-link" href="/add/case">New Case</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link active" aria-current="page"href="#">New Location</a>
+  <a class="nav-link" href="/add/location">New Location</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="/find/case">Find Case</a>
+  <a class="nav-link active" aria-current="page"href="#">Find Case</a>
 </li>
 {% endblock %}
 
@@ -30,12 +30,13 @@
 <br>
 
 <div class="container">
+
   <div class="row justify-content-center">
     <div class="col-8">
 
       <div class="heading text-left">
         <div class="heading-inner">
-          <h3>Add New Location</h3>
+          <h3>Find Specific Case</h3>
           <br>
         </div>
       </div>
@@ -44,17 +45,16 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="row button">
-          <div class="col">
-          </div>
           <div class="col text-right">
-              <button style="margin-bottom: 2rem;" type="submit" class="btn btn-success">Save details</button>
+              <button type="submit" class="btn btn-success">Search</button>
           </div>
-              <br>
+          <br>
         </div>
       </form>
 
     </div>
   </div>
+
 </div>
 
 {% endblock %}

@@ -22,18 +22,32 @@
 <li class="nav-item">
   <a class="nav-link" href="/add/location">New Location</a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="/find/case">Find Case</a>
+</li>
 {% endblock %}
 
 {% block content %}
-    
+<div class="container">
     <div class="heading">
         <div class="heading-inner">
-            <h3>{{ case.name}}</h3>
+            <h3>{{ case.name }}</h3>
         </div>
     </div> 
     
     <br>
     
+    <div class="location_detail_container">
+        <ul class="location_details">
+            <li><span style="font-weight: bold;">Case name:                 </span> {{case.name}}</li>
+            <li><span style="font-weight: bold;">Case Number:               </span> {{case.case_number}}</li>
+            <li><span style="font-weight: bold;">Personal ID:               </span> {{case.personal_id}}</li>
+            <li><span style="font-weight: bold;">Date of Birth:             </span> {{case.date_of_birth}}</li>
+            <li><span style="font-weight: bold;">Date of symptons onset:    </span> {{case.date_of_onset}}</li>
+            <li><span style="font-weight: bold;">Date of test:              </span> {{case.date_of_test}}</li>
+        </ul>
+    </div>
+
     <div class="table-container">
         <div class="table-inner">
             <table class="table">
@@ -41,29 +55,35 @@
                 <thead class="table-dark bg-primary">
         
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Personal ID</th>
-                    <th scope="col">Case Number</th>
-                    <th scope="col">Date of Birth</th>
-                    <th scope="col">Date of Onset</th>
-                    <th scope="col">Date of Test</th>
+                    <th scope="col">Venue name</th>
+                    <th scope="col">Building Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">X coordinate</th>
+                    <th scope="col">Y coordinate</th>
+                    <th scope="col">Date of Event</th>
+                    <th scope="col">Cases</th>
                 </tr>
         
                 </thead>
         
+                <h3>Events attended</h3>
                 <tbody>
+                    {% for location in events.items %}
                         <tr>
-                            <td>{{case.name}}</td>
-                            <td>{{case.personal_id}}</td>
-                            <td>{{case.case_number}}</td>
-                            <td>{{case.date_of_birth}}</td>
-                            <td>{{case.date_of_onset}}</td>
-                            <td>{{case.date_of_test}}</td>
+                            <th scope="row"><a href= "{% url 'location_details' location.0 %}">{{location.0}}</a></th>
+                            <td>{{location.1.building_name}}</td>
+                            <td>{{location.1.address}}</td>
+                            <td>{{location.1.coordinate_x}}</td>
+                            <td>{{location.1.coordinate_y}}</td>
+                            <td>{{location.1.date_of_event}}</td>
+                            <td>{{location.1.case_num}}</td>
                         </tr>
+                    {% endfor %}
+        
                 </tbody>
         
             </table>
         </div>
     </div>
-
+</div>
 {% endblock %}

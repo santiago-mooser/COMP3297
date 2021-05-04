@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/new_location.css' %}">
+{% endblock %}
+
+{% block title %}
+    Search Case
+{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/case">New Case</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/location">New Location</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/find/case">Find Case</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="heading">
+  <div class="heading-inner">
+    <h3>No Case Found with Provided Case Number</h3>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      You might want to ...
+      <br><br>
+      <ul class="list-group list-group-flush">
+          <li class="list-group-item">Re-submit a valid search</li>
+          <li class="list-group-item">Ensure that the case has been added to the database</li>
+          <li class="list-group-item">Check if the case was added correctly, if not, perform modification in Admin page</li>
+          <li class="list-group-item">Contact our team to report functionality errors</li>
+      </ul>
+      <br>
+      <div class="row">
+        <div class="col text-left">
+            <a class="btn btn-primary" href="/" role="button">Home</a>
+            <a class="btn btn-primary" href="/find/case" role="button">Back to Search</a>
+        </div>
+        <br>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}

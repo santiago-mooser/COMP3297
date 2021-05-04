@@ -3,7 +3,9 @@ from django.db.models.deletion import CASCADE
 
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-import requests, datetime
+from django.contrib.auth.models import User
+from requests.models import CaseInsensitiveDict
+import requests, datetime, json
 
 class Case(models.Model):
 
@@ -32,9 +34,8 @@ class Case(models.Model):
         return self.name
 
 
-
 class Location(models.Model):
-    
+
     venue_name              = models.CharField(max_length=250, unique=True)
     building_name           = models.CharField(max_length=250)
     coordinate_x            = models.IntegerField(null=True)
@@ -85,7 +86,15 @@ def retrieve_coordinates(sender, instance, *args, **kwargs):
     details = response.json()[0]
 
     print(details)
-    
+
     instance.coordinate_x = details.get("x")
     instance.coordinate_y = details.get("y")
     instance.address = details.get("addressEN")
+
+class CHP_User(models.Model):
+    # add field for CHP id number
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    staff_number = models.CharField(max_length=6, unique=True)
+
+    def __str__(self):
+        return self.staff_number

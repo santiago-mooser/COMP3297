@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
 from .forms import *
-import datetime
+from datetime import timedelta
 
 @login_required(login_url='/login')
 def homepage(request):
@@ -187,9 +187,41 @@ def location_details(request, loc_name):
 
     location    = Location.objects.get(venue_name = loc_name) 
     cases       = location.attendees.all()
+
+    
+    # This will not modify the is_possible_infected/is_possible_infector of each case in the database
+    # Thus the two parameters are kept location-specific
+    for i in range(len(cases)):
+        case = cases[i]
+        ### Check Infected
+    
+        # The case is a possible infected case if he/she attended the event in the following period:
+        # 2 - 14 days before the onset of symptoms
+        
+        days_before_onset = (case.date_of_onset - location.date_of_event).days
+        print(days_before_onset)
+        if 2 <= days_before_onset <= 14:
+            cases[i].setInfected(True)
+        else:
+            cases[i].setInfected(False)
+        
+        ### Check Infector
+
+        # The case is a possible infectious case if he/she attended the event in the following period:
+        # from 3 days before onset of symptions, to date of confirmation test
+
+        infectious_period_start = case.date_of_onset - timedelta(days=3) 
+        infectious_period_end = case.date_of_test
+        
+        if infectious_period_start <= location.date_of_event <= infectious_period_end:
+            cases[i].setInfector(True)
+        else:
+            cases[i].setInfector(False)
     
     context.update(location.get_details())
     context.update({"cases":cases})
+
+    
 
     return HttpResponse(template.render(context, request))
 

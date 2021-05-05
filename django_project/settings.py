@@ -81,23 +81,11 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': env.dj_db_url('DATABASE_URL')
-# }
+DATABASES = {
+    'default': env.dj_db_url('DATABASE_URL')
+}
 
 # local dev db config
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '3297-group',
-        'USER': 'postgres',
-        'PASSWORD': 'Buddy12teddy',
-        'HOST': 'localhost',
-        'PORT': 5433,
-    }
-
-}
 
 # local dev db config
 

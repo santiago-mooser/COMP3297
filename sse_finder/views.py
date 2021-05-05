@@ -191,37 +191,34 @@ def location_details(request, loc_name):
     
     # This will not modify the is_possible_infected/is_possible_infector of each case in the database
     # Thus the two parameters are kept location-specific
-    for i in range(len(cases)):
-        case = cases[i]
+    for case in cases:
         ### Check Infected
     
         # The case is a possible infected case if he/she attended the event in the following period:
         # 2 - 14 days before the onset of symptoms
         
         days_before_onset = (case.date_of_onset - location.date_of_event).days
-        print(days_before_onset)
-        if 2 <= days_before_onset <= 14:
-            cases[i].setInfected(True)
-        else:
-            cases[i].setInfected(False)
+        
+        if 2 <= days_before_onset <= 3:
+            case.infector_status = 'Possibly Infected and Possibly Infector'
+        elif 4 <= days_before_onset <= 14:
+            case.infector_status = 'Possibly Infected'
         
         ### Check Infector
 
         # The case is a possible infectious case if he/she attended the event in the following period:
         # from 3 days before onset of symptions, to date of confirmation test
 
-        infectious_period_start = case.date_of_onset - timedelta(days=3) 
+        infectious_period_start = case.date_of_onset - timedelta(days=1) 
         infectious_period_end = case.date_of_test
-        
+
         if infectious_period_start <= location.date_of_event <= infectious_period_end:
-            cases[i].setInfector(True)
-        else:
-            cases[i].setInfector(False)
+            case.infector_status = 'Possible Infector'
     
     context.update(location.get_details())
     context.update({"cases":cases})
 
-    
+
 
     return HttpResponse(template.render(context, request))
 

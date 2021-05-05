@@ -59,6 +59,7 @@
                     <th scope="col">Date of Birth</th>
                     <th scope="col">Date of Onset</th>
                     <th scope="col">Date of Test</th>
+                    <th scope="col">Infector or Infected?</th>
                 </tr>
         
                 </thead>
@@ -73,6 +74,7 @@
                             <td>{{case.date_of_birth}}</td>
                             <td>{{case.date_of_onset}}</td>
                             <td>{{case.date_of_test}}</td>
+                            <td>{{case.infector_status}}</td>
                         </tr>
                     {% endfor %}
         

@@ -15,7 +15,7 @@ class Case(models.Model):
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()
-    
+
     def get_details(self):
         details = {
             "case":{

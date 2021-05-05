@@ -15,7 +15,17 @@ class Case(models.Model):
     date_of_birth   = models.DateField()
     date_of_onset   = models.DateField()
     date_of_test    = models.DateField()
+
+    # the following 2 variables are always None, except when showing under location_details
+    is_possible_infected = models.BooleanField(null=True, blank=True)
+    is_possible_infector = models.BooleanField(null=True, blank=True)
     
+    # setters for infected/infector check
+    def setInfected(self, boolean_value):
+        self.is_possible_infected = boolean_value
+    def setInfector(self, boolean_value):
+        self.is_possible_infector = boolean_value
+
     def get_details(self):
         details = {
             "case":{

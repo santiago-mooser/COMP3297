@@ -47,9 +47,12 @@
             <li><span style="font-weight: bold;">Date of test:              </span> {{case.date_of_test}}</li>
         </ul>
     </div>
-
+    
     <div class="table-container">
         <div class="table-inner">
+            <div class="col text-right">
+                <a class="btn btn-success button" role="button" href="{% url 'edit_case' case.case_number %}">Add event attendance</a>
+            </div>
             <table class="table">
 
                 <thead class="table-dark bg-primary">

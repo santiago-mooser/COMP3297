@@ -1,7 +1,8 @@
+from django import template
 from .models import *
 from django.contrib import messages
 from django.template import loader
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -94,7 +95,7 @@ def add_location(request):
 
             #Redirect to location_details if successfully added
             messages.success(request, "Details successfully saved.")
-            return HttpResponseRedirect('/location/'+new_loc.venue_name)
+            return redirect('/location/'+new_loc.venue_name)
 
         # If form invalid, render this page w/ submitted details
         else:
@@ -160,7 +161,7 @@ def add_case(request):
             
             # If successfully saved, redirect to case_details
             messages.success(request, "Details successfully saved.")
-            return HttpResponseRedirect('/case/'+new_case.case_number)
+            return redirect('/case/'+new_case.case_number)
 
         # If form is invalid show error message but keep details
         else:
@@ -233,10 +234,11 @@ def find_case(request):
             # Retrive case from database, show error if not exists
             try:
                 case = Case.objects.get(case_number=case_num)
-                return HttpResponseRedirect('/case/'+case.case_number)
+                return redirect('/case/'+case.case_number)
 
             except Case.DoesNotExist:
-                return HttpResponseRedirect('/find/error')
+                messages.error(request, "Case not found!")
+                return redirect('/find/error')
 
         # if invalid form
         else:
@@ -256,6 +258,7 @@ def find_error(request):
     context = {}
 
     return HttpResponse(template.render(context, request))
+
 
 
 def login_view(request):
@@ -278,9 +281,44 @@ def login_view(request):
                 # return login error page
                 messages.error(request,"Invalid username or password.")
         else:
-            messages.error(reqeuest,"Invalid username or password.")
+            messages.error(request,"Invalid username or password.")
 
     form = AuthenticationForm()
     context.update({'login_form': form})
+
+    return HttpResponse(template.render(context,request))
+
+
+
+def edit_case(request, case_num):
+    template = loader.get_template('pages/edit_case.html')
+    context = {}
+
+    try:
+        case = Case.objects.get(case_number=case_num)
+
+    except Case.DoesNotExist:
+        messages.error(request, "Case does not exist!")
+        return redirect('/home/')
+
+
+    if request.method == 'POST':
+        form = Edit_case(request.POST)
+        if form.is_valid():
+            events = form.cleaned_data["event_list"]
+            
+            for event in events:
+                try:
+                    event.add_attendee(case)
+                except:
+                    messages.error(request, "Failed to add case to "+event+"! Date missmatch.")
+
+            return redirect('/case/'+case.case_number)
+
+
+    form = Edit_case()
+    context.update({"form": form})
+    context.update({"case": case})
+
 
     return HttpResponse(template.render(context,request))

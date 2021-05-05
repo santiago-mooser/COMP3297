@@ -8,9 +8,12 @@ from .models import *
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
+
 class Homepage(forms.Form):
     date_from_range = forms.DateTimeField(label = '', widget=DateInput)
     date_to_range = forms.DateTimeField(label = '', widget=DateInput)
+
 
 
 class New_location(forms.Form):
@@ -56,13 +59,8 @@ class New_location(forms.Form):
         self.helper.add_input(Submit('submit', 'Add location'))
 
 
-class New_case(forms.Form):
 
-    case_event = forms.ModelMultipleChoiceField(
-                            label='Event',
-                            queryset=Location.objects.all().order_by('venue_name'),
-                            widget=forms.CheckboxSelectMultiple(),
-                            required=False)
+class New_case(forms.Form):
 
     case_name = forms.CharField(
                             max_length=150,
@@ -94,6 +92,13 @@ class New_case(forms.Form):
                             label='Date of Positive Test',
                             widget=DateInput)
 
+    case_event = forms.ModelMultipleChoiceField(
+                        label='Event',
+                        queryset=Location.objects.all().order_by('venue_name'),
+                        widget=forms.CheckboxSelectMultiple(),
+                        required=False)
+
+
     class Meta:
         model   = Case
         fields  = (
@@ -112,6 +117,8 @@ class New_case(forms.Form):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Add case'))
 
+
+
 class Find_case(forms.Form):
     case_number     = forms.CharField(max_length=25, label='What is the Case Number?'
                                          , widget= forms.TextInput(attrs={'placeholder':'Enter case number'}))
@@ -121,3 +128,24 @@ class Find_case(forms.Form):
     #     case_number = cleaned_data.get("case_number")
 
     #     if not isinstance(case_number)
+
+
+
+class Edit_case(forms.Form):
+
+    event_list = forms.ModelMultipleChoiceField(
+                            label='Event',
+                            queryset=Location.objects.all().order_by('venue_name'),
+                            widget=forms.CheckboxSelectMultiple(),
+                            required=False)
+
+    class Meta:
+        fields  = (
+                'event_list',
+                )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Add event'))

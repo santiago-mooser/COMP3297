@@ -73,6 +73,14 @@
                             <td>{{case.date_of_birth}}</td>
                             <td>{{case.date_of_onset}}</td>
                             <td>{{case.date_of_test}}</td>
+                            {{% date_difference = case.date_of_onset - location.date_of_event %}}
+                            {{% if date_difference.days < 3 %}}
+                                <td>possible infector</td>
+                            {{% else if date_difference.days == 3 %}}
+                                <td>possible infector or infected</td>
+                            {{% else if date_difference.days > 3 and date_difference.days <= 14 %}}
+                                <td>possibly infected</td>
+                            {{% endif %}}
                         </tr>
                     {% endfor %}
         

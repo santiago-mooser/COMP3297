@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'sse_finder/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'sse_finder/css/location_details.css' %}">
+{% endblock %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+  <a class="nav-link" href="/">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/case">New Case</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/add/location">New Location</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/find/case">Find Case</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-8">
+
+      <div class="heading">
+        <div class="row">
+          <div class="col text-left">
+            <br>
+            <h3>Add new event to {{ case.name }} </h3>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="row button">
+          <div class="col">
+          </div>
+          <div class="col text-right">
+              <button style="margin-bottom: 2rem;" type="submit" class="btn btn-success">Save details</button>
+          </div>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+  
+</div>
+
+  
+
+{% endblock %}

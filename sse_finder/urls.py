@@ -16,6 +16,8 @@ urlpatterns = [
     path('location/<str:loc_name>', views.location_details, name='location_details'),
     path('case/<str:case_num>', views.case_details, name='case_details'),
 
+    path('edit/case/<str:case_num>', views.edit_case, name='edit_case'),
+
     path('find/case', views.find_case, name='find_case'),
     path('find/error', views.find_error, name='find_erro'),
 ]

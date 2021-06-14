@@ -2,24 +2,27 @@
 
 ## Requirements for running the app
 ---
-* docker
-* docker-compose
-That's it!
+* python 3.8
+* pip
+* pipenv
 
 ## How do I get set up? ##
 ---
-* Copy `doc/sample_files/example.env` to the root of the repository and edit it to set the configurations for this specific install and rename to `.env`.
-* (optional) Edit the docker-compose file to fit your needs (such as which folders are linked to the local filesystem and where the docker containers are stored)
-* Run this in the main folder:
+* Enter a virtual environment and install dependencies
 ```
-docker-compose up -d
+pipenv shell
+pip install -r requirements.txt
 ```
-All done! This will build the app and start all the necessary services. Check out `localhost:80`!
+* run migrations for the database:
+```
+./manage.py makemigrations
+./manage.py migrate
+```
 
-
-## Additional documentation is found at:
----
-See `docs/`.
+Run the server!
+```
+./manage runserver
+```
 
 
 ## Who do I talk to in case of problems? ##

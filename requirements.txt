@@ -31,6 +31,6 @@ rply==0.7.8
 soupsieve==2.2.1
 sqlparse==0.4.2
 terminaltables==3.1.0
-urllib3==1.26.5
+urllib3==1.26.18
 whitenoise==5.2.0
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
